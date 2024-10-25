@@ -48,14 +48,14 @@
             <NotGenerated>0</NotGenerated>
             <InvalidFlash>1</InvalidFlash>
           </TargetStatus>
-          <OutputDirectory>.\</OutputDirectory>
-          <OutputName>ProyectoMotor</OutputName>
+          <OutputDirectory>.\Objects\</OutputDirectory>
+          <OutputName>ProyectoMotorV2</OutputName>
           <CreateExecutable>1</CreateExecutable>
           <CreateLib>0</CreateLib>
           <CreateHexFile>0</CreateHexFile>
           <DebugInformation>1</DebugInformation>
           <BrowseInformation>1</BrowseInformation>
-          <ListingPath>.\</ListingPath>
+          <ListingPath>.\Listings\</ListingPath>
           <HexFormatSelection>1</HexFormatSelection>
           <Merge32K>0</Merge32K>
           <CreateBatchFile>0</CreateBatchFile>
@@ -385,14 +385,14 @@
           <GroupName>Source Group 1</GroupName>
           <Files>
             <File>
-              <FileName>CONF_PORTS.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\CONF_PORTS.c</FilePath>
-            </File>
-            <File>
               <FileName>main.c</FileName>
               <FileType>1</FileType>
               <FilePath>.\main.c</FilePath>
+            </File>
+            <File>
+              <FileName>CONF_PORTS.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\CONF_PORTS.c</FilePath>
             </File>
             <File>
               <FileName>PWM.c</FileName>
@@ -443,12 +443,6 @@
         <targetInfos>
           <targetInfo name="Target 1"/>
         </targetInfos>
-      </file>
-      <file attr="config" category="header" name="CMSIS\RTOS2\FreeRTOS\Config\FreeRTOSConfig.h" version="10.6.0">
-        <instance index="0" removed="1">RTE\RTOS\FreeRTOSConfig.h</instance>
-        <component Cbundle="FreeRTOS" Cclass="RTOS" Cgroup="Config" Cvariant="CMSIS RTOS2" Cvendor="ARM" Cversion="11.1.0" condition="FreeRTOS Config CMSIS RTOS2"/>
-        <package name="CMSIS-FreeRTOS" schemaVersion="1.7.27" url="https://www.keil.com/pack/" vendor="ARM" version="11.1.0"/>
-        <targetInfos/>
       </file>
     </files>
   </RTE>
