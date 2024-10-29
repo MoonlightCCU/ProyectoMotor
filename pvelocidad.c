@@ -36,7 +36,7 @@ int poner_velocidad(uint16_t y,uint8_t dutyc, uint8_t dutyc_max, uint8_t div, ui
         // Regresar el valor de "y" para que el modulo PID fije el valor del PWM
         // Imprimir el valor de "y" en la pantalla
         //Aplico el valor de "y" al comparador B del generador B.
-        //conf_PWM0_GenB(y);
+        conf_PWM0_GenB(y);
 
         //Mientras siga pulsado el boton, no hago nada.
         //Esto es para evitar que se siga ejecutando el if()
@@ -57,13 +57,13 @@ int poner_velocidad(uint16_t y,uint8_t dutyc, uint8_t dutyc_max, uint8_t div, ui
           y = LOAD - 1; //Mantengo al 100% la intensidad del motor
         }
         //Aplico el valor de "y" al Comparador B del Generador B
-        //conf_PWM0_GenB(y);
+        conf_PWM0_GenB(y);
 
         //Mientras siga pulsado el boton, no hago nada.
         //Esto es para evitar que se siga ejecutando el if()
         while(GPIO_PORTJ_DATA_R == 0x02){}
       }
     }
-  } while(GPIO_PORTB_DATA_R != 0x00);
+  } while(GPIO_PORTB_DATA_R == 0x01);
   return y;
 }
