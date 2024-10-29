@@ -7,4 +7,4 @@
 
 #include "PWM.h"
 
-int poner_velocidad(uint16_t y, volatile uint32_t SWST,uint8_t dutyc, uint8_t dutyc_max, uint16_t LOAD);
+int poner_velocidad(uint16_t, volatile uint32_t,uint8_t, uint8_t, uint16_t);

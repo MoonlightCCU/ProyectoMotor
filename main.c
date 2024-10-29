@@ -28,18 +28,19 @@ int main(void){
 
 	//Configuracion del puerto J
   PuertoJ_Conf();
-	
+	PuertoB_conf();
+
 	//Configuracion del PWM con duty cycle al 50% (por defecto) del valor cargado en el registro PMW0_0_LOAD_R
 	conf_Global_PWM0(div,freq);
 	
 	while(1){
-    if(GPIO_PORTJ_DATA_R == 0x04) {
+    if(GPIO_PORTB_DATA_R == 0x00) {
       y = poner_velocidad(y,SWST,dutyc,dutyc_max,LOAD);
       //Aqui le pasamos el valor al PID y se encarga de lo demas
       conf_PWM0_GenB(y); //Esto debera ir dentro del modulo PID
     }
     // Aqui calcula el PID los valores?
-    while(GPIO_PORTJ_DATA_R == 0x04){
+    while(GPIO_PORTB_DATA_R == 0x00){
       //Este while es para impedir los falsos disparos del boton
       //Esto lo complica todo porque aun no podemos usar interrupciones
     }

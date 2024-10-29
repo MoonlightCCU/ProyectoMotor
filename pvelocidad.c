@@ -10,7 +10,7 @@
 int poner_velocidad(uint16_t y, volatile uint32_t SWST,uint8_t dutyc, uint8_t dutyc_max, uint16_t LOAD){
   do{
     //Mientras el boton siga pulsado no hacer nada, hasta que se suelte
-    while(GPIO_PORTJ_DATA_R == 0x04){}
+    while(GPIO_PORTB_DATA_R == 0x00){}
 
     //Leo el estado del boton.
     SWST = GPIO_PORTJ_DATA_R;
@@ -59,6 +59,6 @@ int poner_velocidad(uint16_t y, volatile uint32_t SWST,uint8_t dutyc, uint8_t du
         while(GPIO_PORTJ_DATA_R == 0x02){}
       }
     }
-  } while(SWST != 0x04);
+  } while(GPIO_PORTB_DATA_R != 0x00);
   return y;
 }

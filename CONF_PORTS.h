@@ -23,6 +23,9 @@ void PuertoA_Nokia5110(void);
 //Configura el puerto B pines 0:4 como entradas con interrupciones y resistencia pull-up
 void PuertoB_Int(void);
 
+//Configura el pin 0 del puerto B como entrada pull-up
+void PuertoB_conf(void);
+
 //Función para configurar los botones del puerto J
 void PuertoJ_Conf(void);
 
