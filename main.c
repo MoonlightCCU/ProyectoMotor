@@ -18,13 +18,11 @@
 //Declaro las dos variables para la configuracion del PWM
 uint16_t y = 0;
 uint16_t LOAD = 0;
-volatile uint32_t SWST = 0;
 
 //main function
 int main(void){
   // Obtengo y al 50%, y el valor de LOAD para el registro PMW0_0_LOAD_R
   y = PWM_DUTYC(50,div,freq);
-  LOAD = PWM_LOAD(div,freq); //Quizas pasarlo de una vez a conf_Global_PWM0?
 
 	//Configuracion del puerto J
   PuertoJ_Conf();
@@ -35,7 +33,7 @@ int main(void){
 	
 	while(1){
     if(GPIO_PORTB_DATA_R == 0x00) {
-      y = poner_velocidad(y,SWST,dutyc,dutyc_max,LOAD);
+      y = poner_velocidad(y,dutyc,dutyc_max,div,freq);
       //Aqui le pasamos el valor al PID y se encarga de lo demas
       conf_PWM0_GenB(y); //Esto debera ir dentro del modulo PID
     }

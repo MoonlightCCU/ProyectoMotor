@@ -6,8 +6,13 @@
  */
 
 #include "pvelocidad.h"
+#include <stdint.h>
 
-int poner_velocidad(uint16_t y, volatile uint32_t SWST,uint8_t dutyc, uint8_t dutyc_max, uint16_t LOAD){
+int poner_velocidad(uint16_t y,uint8_t dutyc, uint8_t dutyc_max, uint8_t div, uint16_t freq){
+  volatile uint32_t SWST = 0;
+  uint16_t dutyct = PWM_DUTYC(dutyc, div, freq);
+  uint16_t dutyct_max = PWM_DUTYC(dutyc_max,div,freq);
+  uint16_t LOAD = PWM_LOAD(div,freq);
   do{
     //Mientras el boton siga pulsado no hacer nada, hasta que se suelte
     while(GPIO_PORTB_DATA_R == 0x00){}
@@ -21,10 +26,10 @@ int poner_velocidad(uint16_t y, volatile uint32_t SWST,uint8_t dutyc, uint8_t du
       if(y == 0){
         //no hacer nada
       } else{
-        y = y - dutyc;
+        y = y - dutyct;
         //Si "y" es menor del 5%, entonces lo hago cero para apagar el motor
         //pero si no es menor disminuyo en 5%.
-        if(y <= dutyc){
+        if(y <= dutyct){
           y = 0; //Apago el motor.
         }
         // IMPORTANTE
@@ -45,10 +50,10 @@ int poner_velocidad(uint16_t y, volatile uint32_t SWST,uint8_t dutyc, uint8_t du
       if(y == (LOAD - 1)){
         //no hacer nada
       } else {
-        y = y + dutyc;
+        y = y + dutyct;
         //Si el valor de "y" sobrepasa el 97%, lo pongo a (LOAD - 1) que viene siendo el 99% del valor cargado
         //En el registro del load.
-        if(y >= dutyc_max){
+        if(y >= dutyct_max){
           y = LOAD - 1; //Mantengo al 100% la intensidad del motor
         }
         //Aplico el valor de "y" al Comparador B del Generador B

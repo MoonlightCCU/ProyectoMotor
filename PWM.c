@@ -6,7 +6,6 @@
  */
 
 #include "PWM.h"
-#include "tm4c1294ncpdt.h"
 
 /*
  *  Función para inicializar el PWM
@@ -80,8 +79,8 @@ int PWM_LOAD(uint8_t div, uint16_t freq){
 
 // Función para obtener el valor del comparador dado el duty cycle (0% a 100%)
 int PWM_DUTYC(uint8_t dutyc, uint8_t div, uint16_t freq){
-  uint16_t y = (dutyc/100) * PWM_LOAD(div,freq) - 1;
-  return y;
+  uint16_t yp = (dutyc/100) * PWM_LOAD(div,freq) - 1;
+  return yp;
 }
 
 //En esta funcion configuro el comparador B, para el GeneradorB(PF1). Esta
