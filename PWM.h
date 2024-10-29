@@ -9,6 +9,7 @@
 #include "tm4c1294ncpdt.h"
 #include "CONF_PORTS.h"
 
-void conf_Global_PWM0(uint16_t,uint16_t);
-void conf_PWM0_GenA(uint16_t);
-void conf_PWM0_GenB(uint16_t);
+int conf_Global_PWM0(uint8_t div,uint16_t freq);
+int PWM_LOAD(uint8_t div, uint16_t freq);
+int PWM_DUTYC(uint8_t dutyc, uint8_t div, uint16_t freq);
+void conf_PWM0_GenB(uint16_t y);

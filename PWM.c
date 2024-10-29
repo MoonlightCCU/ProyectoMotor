@@ -6,10 +6,14 @@
  */
 
 #include "PWM.h"
+#include "tm4c1294ncpdt.h"
 
-//Función para inicializar el PWM
-//Recibe dos valores de 16 bits, los cuales son x para PWM0 Generador A y y para PMW0 Generador B
-void conf_Global_PWM0(uint16_t x, uint16_t y){
+/*
+ *  Función para inicializar el PWM
+ *  Recibe dos valores de 8 bits, los cuales son div para divisor del reloj del sistema 
+ *  y freq para la frequencia deseada
+ */
+int conf_Global_PWM0(uint8_t div,uint16_t freq){
 	//Paso 1: Activar el reloj del PWM
 	SYSCTL_RCGCPWM_R |= SYSCTL_RCGCPWM_R0; //Enable and provide a clock to PWM module 0 in Run mode.
 	
@@ -25,27 +29,37 @@ void conf_Global_PWM0(uint16_t x, uint16_t y){
   */
   PuertoF_Conf_PWM();
 
-	//Paso 5: Configuración del PWM Clock (PWMCC). Divisor = 64, entonces (16MHz/64) = 250 KHz = 250000 Hz 
-	PWM0_CC_R |= (PWM_CC_USEPWM | PWM_CC_PWMDIV_64); //PWM_CC_USEPWM para activar el reloj con divisor
-	
+	//Paso 5: Configuración del PWM Clock (PWMCC). Divisor = 32, entonces (16MHz/32) = 500 KHz = 500000 Hz 
+  if(div == 2){
+    PWM0_CC_R |= (PWM_CC_USEPWM | PWM_CC_PWMDIV_2);
+  } else if (div == 4){
+    PWM0_CC_R |= (PWM_CC_USEPWM | PWM_CC_PWMDIV_4);
+  } else if (div == 8){
+    PWM0_CC_R |= (PWM_CC_USEPWM | PWM_CC_PWMDIV_8);
+  } else if (div == 16){
+    PWM0_CC_R |= (PWM_CC_USEPWM | PWM_CC_PWMDIV_16);
+  } else if (div == 32){
+    PWM0_CC_R |= (PWM_CC_USEPWM | PWM_CC_PWMDIV_32);
+  } else if (div == 64){
+    PWM0_CC_R |= (PWM_CC_USEPWM | PWM_CC_PWMDIV_64);
+  } else {
+    return 0;
+  }
+  
 	//Paso 6: Configuro PWM en countdown y configuro los generadores.
 	PWM0_0_CTL_R |= 0x00000000;
 	
 	//Para el GeneradorA, Cuando Cont = Load, entonces PMW0GENA = Low y cuando Cont=CMPA, entonces PMW0GENA = HIGH
-	PWM0_0_GENA_R |= 0x00000048; //No utilizo este generador porque esta conectado a un led de la Tiva C
+	//PWM0_0_GENA_R |= 0x00000048; //No utilizo este generador porque esta conectado a un led de la Tiva C
 	
 	//Para el GeneradorB, Cuando Cont = Load, entonces PMW0GENB = Low y cuando Cont=CMPB, entonces PMW0GENB = HIGH
 	PWM0_0_GENB_R |= 0x0000080C; //Este es el generador que utilizo.
 	
-	//Paso 7: PWM0LOAD. 50Hz, entonces (250KHz/50Hz)=5000
-	PWM0_0_LOAD_R = 0x00001388;
+	//Paso 7: PWM0LOAD. 500Hz, entonces (500KHz/500Hz)=1000
+	PWM0_0_LOAD_R = PWM_LOAD(div,freq);
 	
-	//Paso 8: M0PWM0 = 50% (default) Duty Cycle. Esta configurado al 50% desde el main()
-	PWM0_0_CMPA_R =x; //No utilizo este generador
-	
-	//Paso 9: M0PWM1 = 50% (deafult) Duty Cycle. Esta configurado al 50% desde el main() y
-	//desde ahi puedo ponerle el valor deseado.
-	PWM0_0_CMPB_R =y;
+	//Paso 9: M0PWM1 = 50% (deafult) Duty Cycle
+	PWM0_0_CMPB_R = PWM_DUTYC(50,div,freq);
 	
 	//Paso 10: Inicializo los Timers en PWM generador 0.
 	PWM0_0_CTL_R |= 0x00000001;
@@ -53,13 +67,21 @@ void conf_Global_PWM0(uint16_t x, uint16_t y){
 	//Paso 11: Activo PWM salidas. En este solo configuro para que salga por PF1 y desactivo para PF0
 	//Porque no utilizo el Generador A (PF0)
 	PWM0_ENABLE_R |= 0x00000002;
+  
+  // Regresa 1 cuando todo esta bien, y 0 cuando hay un error
+  return 1;
 }
 
-//En esta funcion configuro el comparador A, para el GeneradorA(PF0), pero
-//Como no lo utilizo, no es necesario.
-void conf_PWM0_GenA(uint16_t x){
-	//Paso 8: M0PWM0 = x% Duty Cycle
-	PWM0_0_CMPA_R = x;
+// Función para obetener el valor de load
+int PWM_LOAD(uint8_t div, uint16_t freq){
+  uint16_t LOAD = 16000000/(div*freq);
+  return LOAD;
+}
+
+// Función para obtener el valor del comparador dado el duty cycle (0% a 100%)
+int PWM_DUTYC(uint8_t dutyc, uint8_t div, uint16_t freq){
+  uint16_t y = (dutyc/100) * PWM_LOAD(div,freq) - 1;
+  return y;
 }
 
 //En esta funcion configuro el comparador B, para el GeneradorB(PF1). Esta

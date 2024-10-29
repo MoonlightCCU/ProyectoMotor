@@ -399,6 +399,11 @@
               <FileType>1</FileType>
               <FilePath>.\PWM.c</FilePath>
             </File>
+            <File>
+              <FileName>pvelocidad.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\pvelocidad.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>

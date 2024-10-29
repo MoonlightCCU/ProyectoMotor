@@ -110,10 +110,10 @@ void PuertoJ_Conf(){
 	while((SYSCTL_PRGPIO_R & SYSCTL_PRGPIO_R8)==0){} //Espera a que puerto J este listo
 	GPIO_PORTJ_DIR_R = 0x00; // Pin 0 y 1 como entrada. (Puerto J, los dos botones conectados a la Tiva C)
 	GPIO_PORTJ_AFSEL_R = 0X00; //Sin función alternativa
-	GPIO_PORTJ_DEN_R |= 0X03; //GPIO DIGITAL
+	GPIO_PORTJ_DEN_R |= 0X07; //GPIO DIGITAL
 	GPIO_PORTJ_AMSEL_R &= 0X00; // Ninguna función analogica
 	GPIO_PORTJ_PCTL_R &= 0X00; //Ninguna función especial a los pines.
-	GPIO_PORTJ_PUR_R |= 0x03; //Activo resistencia pull-up
+	GPIO_PORTJ_PUR_R |= 0x07; //Activo resistencia pull-up
 }
 
 void PuertoJ_Int(){
