@@ -5,6 +5,9 @@
  *      Author: Carlos Canul
  */
 
+#ifndef PWM_H
+#define PWM_H
+
 #include <stdint.h>
 #include "tm4c1294ncpdt.h"
 #include "CONF_PORTS.h"
@@ -14,3 +17,5 @@ int PWM_LOAD(uint8_t, uint16_t);
 int PWM_DUTYC(uint8_t, uint8_t, uint16_t);
 void conf_PWM0_GenA(uint16_t);
 void conf_PWM0_GenB(uint16_t);
+
+#endif

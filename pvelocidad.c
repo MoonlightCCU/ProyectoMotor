@@ -1,22 +1,20 @@
 /*
  * pvelocidad.c
  *
- * Created on: Oct, 2024
- *     Author: w,x,y,z
+ *  Created on: Oct, 2024
+ *      Author: Carlos Canul
+ *  Modified on: Oct, 2024
+ *      By: Manuel Lucas
  */
 
 #include "pvelocidad.h"
-#include <stdint.h>
 
 int poner_velocidad(uint16_t y,uint8_t dutyc, uint8_t dutyc_max, uint8_t div, uint16_t freq){
-  volatile uint32_t SWST = 0;
+  volatile uint32_t SWST;
   uint16_t dutyct = PWM_DUTYC(dutyc, div, freq);
   uint16_t dutyct_max = PWM_DUTYC(dutyc_max,div,freq);
   uint16_t LOAD = PWM_LOAD(div,freq);
   do{
-    //Mientras el boton siga pulsado no hacer nada, hasta que se suelte
-    while(GPIO_PORTB_DATA_R == 0x00){}
-
     //Leo el estado del boton.
     SWST = GPIO_PORTJ_DATA_R;
 
@@ -64,6 +62,12 @@ int poner_velocidad(uint16_t y,uint8_t dutyc, uint8_t dutyc_max, uint8_t div, ui
         while(GPIO_PORTJ_DATA_R == 0x02){}
       }
     }
-  } while(GPIO_PORTB_DATA_R == 0x01);
+
+    // Condición de salida si se detecta una nueva pulsación en el botón de PortB
+    if((GPIO_PORTB_DATA_R & 0x01) == 0) {
+      while((GPIO_PORTB_DATA_R & 0x01) == 0){}  //Espera a que el botón de PortB se suelte
+      break;  // Sale del do-while
+    }
+  } while(1);
   return y;
 }

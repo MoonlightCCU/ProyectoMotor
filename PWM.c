@@ -6,8 +6,6 @@
  */
 
 #include "PWM.h"
-#include "tm4c1294ncpdt.h"
-#include <stdint.h>
 
 /*
  *  Función para inicializar el PWM
@@ -58,8 +56,6 @@ int conf_Global_PWM0(uint8_t div,uint16_t freq){
 	
 	//Paso 7: PWM0LOAD. 500Hz, entonces (500KHz/500Hz)=1000
 	PWM0_0_LOAD_R = PWM_LOAD(div,freq);//6250;//PWM_LOAD(div,freq);
-	
-  PWM0_0_CMPA_R = PWM_DUTYC(50,div,freq);//3124;
 
 	//Paso 9: M0PWM1 = 50% (deafult) Duty Cycle
 	PWM0_0_CMPB_R = PWM_DUTYC(50,div,freq);
@@ -72,7 +68,7 @@ int conf_Global_PWM0(uint8_t div,uint16_t freq){
 	PWM0_ENABLE_R |= 0x00000002;
   
   // Regresa 1 cuando todo esta bien, y 0 cuando hay un error
-  return 1;
+  return PWM_DUTYC(50,div,freq);
 }
 
 // Función para obetener el valor de load
@@ -86,13 +82,6 @@ int PWM_DUTYC(uint8_t dutyc, uint8_t div, uint16_t freq){
   uint16_t LOAD = PWM_LOAD(div,freq);
   uint16_t yp = ((dutyc*LOAD)/100) - 1;
   return yp;
-}
-
-//En esta funcion configuro el comparador B, para el GeneradorB(PF1). Esta
-//funcion es la que llamo para modificar el valor del comparador B.
-void conf_PWM0_GenA(uint16_t y){
-	//Paso 9: M0PWM1 = y% Duty Cycle
-	PWM0_0_CMPA_R = y;
 }
 
 //En esta funcion configuro el comparador B, para el GeneradorB(PF1). Esta

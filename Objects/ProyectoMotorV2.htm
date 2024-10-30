@@ -3,9 +3,9 @@
 <title>Static Call Graph - [.\Objects\ProyectoMotorV2.axf]</title></head>
 <body><HR>
 <H1>Static Call Graph for image .\Objects\ProyectoMotorV2.axf</H1><HR>
-<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 6220000: Last Updated: Tue Oct 29 15:57:38 2024
+<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 6220000: Last Updated: Wed Oct 30 13:22:14 2024
 <BR><P>
-<H3>Maximum Stack Usage =         88 bytes + Unknown(Functions without stacksize, Cycles, Untraceable Function Pointers)</H3><H3>
+<H3>Maximum Stack Usage =         80 bytes + Unknown(Functions without stacksize, Cycles, Untraceable Function Pointers)</H3><H3>
 Call chain for Maximum Stack Depth:</H3>
 __rt_entry_main &rArr; main &rArr; poner_velocidad &rArr; PWM_DUTYC &rArr; PWM_LOAD
 <P>
@@ -396,7 +396,7 @@ Global Symbols
 <P><STRONG><a name="[c2]"></a>__rt_entry_postsh_1</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, __rtentry2.o(.ARM.Collect$$rtentry$$00000009))
 
 <P><STRONG><a name="[90]"></a>__rt_entry_main</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, __rtentry2.o(.ARM.Collect$$rtentry$$0000000D))
-<BR><BR>[Stack]<UL><LI>Max Depth = 88 + Unknown Stack Size
+<BR><BR>[Stack]<UL><LI>Max Depth = 80 + Unknown Stack Size
 <LI>Call Chain = __rt_entry_main &rArr; main &rArr; poner_velocidad &rArr; PWM_DUTYC &rArr; PWM_LOAD
 </UL>
 <BR>[Calls]<UL><LI><a href="#[92]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;exit
@@ -1374,15 +1374,14 @@ Global Symbols
 </UL>
 <BR>[Called By]<UL><LI><a href="#[9f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;poner_velocidad
 <LI><a href="#[9b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;conf_Global_PWM0
-<LI><a href="#[91]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
 </UL>
 
 <P><STRONG><a name="[9a]"></a>PWM_LOAD</STRONG> (Thumb, 44 bytes, Stack size 8 bytes, pwm.o(.text.PWM_LOAD))
 <BR><BR>[Stack]<UL><LI>Max Depth = 8<LI>Call Chain = PWM_LOAD
 </UL>
-<BR>[Called By]<UL><LI><a href="#[9f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;poner_velocidad
+<BR>[Called By]<UL><LI><a href="#[99]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PWM_DUTYC
+<LI><a href="#[9f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;poner_velocidad
 <LI><a href="#[9b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;conf_Global_PWM0
-<LI><a href="#[99]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PWM_DUTYC
 </UL>
 
 <P><STRONG><a name="[9e]"></a>PuertoB_conf</STRONG> (Thumb, 126 bytes, Stack size 0 bytes, conf_ports.o(.text.PuertoB_conf))
@@ -1400,12 +1399,12 @@ Global Symbols
 <P><STRONG><a name="[77]"></a>SystemInit</STRONG> (Thumb, 36 bytes, Stack size 0 bytes, system_tm4c129.o(.text.SystemInit))
 <BR>[Address Reference Count : 1]<UL><LI> startup_tm4c129.o(.text)
 </UL>
-<P><STRONG><a name="[9b]"></a>conf_Global_PWM0</STRONG> (Thumb, 382 bytes, Stack size 24 bytes, pwm.o(.text.conf_Global_PWM0))
+<P><STRONG><a name="[9b]"></a>conf_Global_PWM0</STRONG> (Thumb, 370 bytes, Stack size 24 bytes, pwm.o(.text.conf_Global_PWM0))
 <BR><BR>[Stack]<UL><LI>Max Depth = 48<LI>Call Chain = conf_Global_PWM0 &rArr; PWM_DUTYC &rArr; PWM_LOAD
 </UL>
-<BR>[Calls]<UL><LI><a href="#[9a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PWM_LOAD
+<BR>[Calls]<UL><LI><a href="#[99]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PWM_DUTYC
+<LI><a href="#[9a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PWM_LOAD
 <LI><a href="#[9c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PuertoF_Conf_PWM
-<LI><a href="#[99]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PWM_DUTYC
 </UL>
 <BR>[Called By]<UL><LI><a href="#[91]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
 </UL>
@@ -1416,24 +1415,23 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[9f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;poner_velocidad
 </UL>
 
-<P><STRONG><a name="[91]"></a>main</STRONG> (Thumb, 134 bytes, Stack size 32 bytes, main.o(.text.main))
-<BR><BR>[Stack]<UL><LI>Max Depth = 88<LI>Call Chain = main &rArr; poner_velocidad &rArr; PWM_DUTYC &rArr; PWM_LOAD
+<P><STRONG><a name="[91]"></a>main</STRONG> (Thumb, 154 bytes, Stack size 24 bytes, main.o(.text.main))
+<BR><BR>[Stack]<UL><LI>Max Depth = 80<LI>Call Chain = main &rArr; poner_velocidad &rArr; PWM_DUTYC &rArr; PWM_LOAD
 </UL>
 <BR>[Calls]<UL><LI><a href="#[9f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;poner_velocidad
 <LI><a href="#[9b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;conf_Global_PWM0
 <LI><a href="#[9e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PuertoB_conf
 <LI><a href="#[9d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PuertoJ_Conf
-<LI><a href="#[99]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PWM_DUTYC
 </UL>
 <BR>[Called By]<UL><LI><a href="#[90]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__rt_entry_main
 </UL>
 
-<P><STRONG><a name="[9f]"></a>poner_velocidad</STRONG> (Thumb, 332 bytes, Stack size 32 bytes, pvelocidad.o(.text.poner_velocidad))
+<P><STRONG><a name="[9f]"></a>poner_velocidad</STRONG> (Thumb, 340 bytes, Stack size 32 bytes, pvelocidad.o(.text.poner_velocidad))
 <BR><BR>[Stack]<UL><LI>Max Depth = 56<LI>Call Chain = poner_velocidad &rArr; PWM_DUTYC &rArr; PWM_LOAD
 </UL>
 <BR>[Calls]<UL><LI><a href="#[a0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;conf_PWM0_GenB
-<LI><a href="#[9a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PWM_LOAD
 <LI><a href="#[99]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PWM_DUTYC
+<LI><a href="#[9a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PWM_LOAD
 </UL>
 <BR>[Called By]<UL><LI><a href="#[91]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
 </UL>
