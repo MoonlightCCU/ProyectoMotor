@@ -11,28 +11,29 @@
 #include "CONF_PORTS.h"
 #include "PWM.h"
 #include "pvelocidad.h"
+#include "Max7219.h"
 
-uint8_t vel;
-uint16_t y;
+//max7219 pin 1 VCC-->TIVA C 5.00
+//max7219 pin 2 GND -->TIVA C GND
+//max7219 pin 3 DIN -->TIVA C PA4  SSI0XDAT0 
+//max7219 pin 4 /CS -->TIVA C PA3  SSI0Fss 
+//max7219 pin 5 CLK -->TIVA C PA2  SSI0Clk 
+//max7219 pin x DOUT --> No se usa
 
-//main function
 int main(void){
-	//Configuracion del puerto J
-  PuertoJ_Conf();
-	PuertoB_conf();
-
-	//Configuracion del PWM con duty cycle al 50% (por defecto) del valor cargado en el registro PMW0_0_LOAD_R
-	y = conf_Global_PWM0(div,freq);
+	PuertoB_Conf();
+	PuertoJ_Conf();
 	
+	MAX7219_Ini();
+	
+	Max7219_Transmit(Dcode);		 //Le mandamos al max7219 que va a utilizar el decodificador
+	Max7219_Transmit(Intensidad);//Le mandamos la intensidad 5/32 al max7219, segun el datasheet
+	Max7219_Transmit(SCAN);
+	Max7219_Transmit(shutMode);
+	Max7219_Transmit(Nperacion); //Le mandamos al max7219 que no va a realizar nada ?????
+	
+	velocidaddeseada(speed); //Transmito al MAX7219 la velocidad inicial del motor, el cual es 0
 	while(1){
-    if((GPIO_PORTB_DATA_R & 0x01) == 0){        //Detecta si el botón en PortB fue presionado
-      while((GPIO_PORTB_DATA_R & 0x01) == 0);   // Espera a que se suelte el botón
-      vel = 1;                                  //Activa la señal para entrar a `poner_velocidad`
-    }
-
-    if(vel == 1) {
-      y = poner_velocidad(y, dutyc, dutyc_max, div, freq);  // Llama a `poner_velocidad` con el ciclo de trabajo actual
-      vel = 0;                                              //Reinicia la señal de velocidad para volver a esperar otra pulsación
-    }
+    wait_input();
   }
 }
