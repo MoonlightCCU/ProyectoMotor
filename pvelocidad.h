@@ -27,7 +27,8 @@ void Poner_Vel_Init(poner_vel *, uint8_t, uint8_t, uint8_t,float,volatile uint8_
 void Poner_Vel_Wait(poner_vel *);
 void Poner_Vel_Update(poner_vel *);
 
-
+void PuertoB_Conf(void);
+void PuertoJ_Conf(void);
 //extern uint8_t RPM_min;    //RPM minimo
 //extern uint8_t RPM_max;    //RPM maximo
 //extern uint8_t RPM_adj;    //Incremento o Decremento del RPM
@@ -37,8 +38,5 @@ void Poner_Vel_Update(poner_vel *);
 //
 //void wait_input(void);
 //float poner_velocidad(float, uint8_t, uint8_t, uint8_t);
-
-void PuertoB_Conf(void);
-void PuertoJ_Conf(void);
 
 #endif

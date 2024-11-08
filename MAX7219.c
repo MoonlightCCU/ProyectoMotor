@@ -24,6 +24,8 @@ void MAX7219_Ini(void){
   SSI0_CR0_R |= SSI_CR0_DSS_M; // Configurar para transmitir datos de 16 bits
 
   SSI0_CR1_R |= SSI_CR1_SSE; // Activar el módulo SSI0 para iniciar la operación
+
+  max7219_config();
 }
 
 // Configuración inicial del MAX7219 para manejar los dígitos del display

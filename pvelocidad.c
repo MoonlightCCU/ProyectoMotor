@@ -22,6 +22,8 @@ void Poner_Vel_Init(poner_vel *pvelocidad, uint8_t RPM_min, uint8_t RPM_max, uin
   pvelocidad->RPM = RPM;
   pvelocidad->vel = vel;
   pvelocidad->SWST = SWST;
+  PuertoB_Conf();
+  PuertoJ_Conf();
 }
 
 void Poner_Vel_Wait(poner_vel *pvelocidad){

@@ -88,3 +88,17 @@ void conf_PWM0_GenB(float y){
 	//Paso 9: M0PWM1 = y% Duty Cycle
 	PWM0_0_CMPB_R = (uint16_t)yp;
 }
+
+void PuertoF_Conf_PWM(){
+  //Paso 2: Activar el reloj para el puerto a utilizar, en este caso el puerto F
+	SYSCTL_RCGCGPIO_R |= SYSCTL_RCGCGPIO_R5;
+	while((SYSCTL_PRGPIO_R & SYSCTL_RCGCGPIO_R5)==0){
+    //Espera a que puerto F este listo
+  }
+
+	//Paso 3 y 4: Configurar funcion alternativa
+	GPIO_PORTF_AFSEL_R |= 0x03; //Para funcion alternativa
+	GPIO_PORTF_DEN_R |= 0x03; //GPIO DIGITAL
+	GPIO_PORTF_PCTL_R &= 0xFFFFFF00;
+	GPIO_PORTF_PCTL_R |= 0x00000066; //Funcion alternativa bit 6 para los generadores del modulo
+}
