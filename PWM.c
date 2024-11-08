@@ -12,7 +12,7 @@
  *  Recibe dos valores de 8 bits, los cuales son div para divisor del reloj del sistema 
  *  y freq para la frequencia deseada
  */
-int conf_Global_PWM0(uint8_t div,uint16_t freq){
+void conf_Global_PWM0(uint8_t div,uint16_t freq){
 	//Paso 1: Activar el reloj del PWM
 	SYSCTL_RCGCPWM_R |= SYSCTL_RCGCPWM_R0; //Enable and provide a clock to PWM module 0 in Run mode.
 	
@@ -42,7 +42,7 @@ int conf_Global_PWM0(uint8_t div,uint16_t freq){
   } else if (div == 64){
     PWM0_CC_R |= (PWM_CC_USEPWM | PWM_CC_PWMDIV_64);
   } else {
-    return 0;
+    PWM0_CC_R |= (PWM_CC_USEPWM | PWM_CC_PWMDIV_32);
   }
   
 	//Paso 6: Configuro PWM en countdown y configuro los generadores.
@@ -66,9 +66,6 @@ int conf_Global_PWM0(uint8_t div,uint16_t freq){
 	//Paso 11: Activo PWM salidas. En este solo configuro para que salga por PF1 y desactivo para PF0
 	//Porque no utilizo el Generador A (PF0)
 	PWM0_ENABLE_R |= 0x00000002;
-  
-  // Regresa 1 cuando todo esta bien, y 0 cuando hay un error
-  return PWM_DUTYC(50,div,freq);
 }
 
 // Función para obetener el valor de load
@@ -86,7 +83,8 @@ int PWM_DUTYC(uint8_t dutyc, uint8_t div, uint16_t freq){
 
 //En esta funcion configuro el comparador B, para el GeneradorB(PF1). Esta
 //funcion es la que llamo para modificar el valor del comparador B.
-void conf_PWM0_GenB(uint16_t y){
+void conf_PWM0_GenB(float y){
+  float yp = (1000*y)/130;
 	//Paso 9: M0PWM1 = y% Duty Cycle
-	PWM0_0_CMPB_R = y;
+	PWM0_0_CMPB_R = (uint16_t)yp;
 }

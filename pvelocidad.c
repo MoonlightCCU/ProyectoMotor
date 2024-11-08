@@ -9,25 +9,85 @@
 
 #include "pvelocidad.h"
 
-uint8_t RPM_min = 0;			//RPM minimo
-uint8_t RPM_max = 130;		//RPM maximo
-uint8_t RPM_adj = 5; 		//Incremento o Decremento del RPM
-uint8_t speed = 0; 		//Velocidad inicial
-volatile uint8_t vel = 0;
-volatile uint32_t SWST = 0;
+//uint8_t RPM_min = 0;			//RPM minimo
+//uint8_t RPM_max = 130;		//RPM maximo
+//uint8_t RPM_adj = 5; 		//Incremento o Decremento del RPM
+//float speed = 50.0; 		//Velocidad inicial
+//volatile uint8_t vel = 0;
+//volatile uint32_t SWST = 0;
+void Poner_Vel_Init(poner_vel *pvelocidad, uint8_t RPM_min, uint8_t RPM_max, uint8_t RPM_adj, float RPM, volatile uint8_t vel, volatile uint32_t SWST){
+  pvelocidad->RPM_min = RPM_min;
+  pvelocidad->RPM_max = RPM_max;
+  pvelocidad->RPM_adj = RPM_adj;
+  pvelocidad->RPM = RPM;
+  pvelocidad->vel = vel;
+  pvelocidad->SWST = SWST;
+}
 
-void wait_input(){
+void Poner_Vel_Wait(poner_vel *pvelocidad){
 	if((GPIO_PORTB_DATA_R & 0x01) == 0) {  		 //Detecta si el botón en PortB fue presionado
-		while((GPIO_PORTB_DATA_R & 0x01) == 0);  //Espera a que se suelte el botón
-		vel = 1;  														 	 //Activa la señal para entrar a `poner_velocidad`
+		while((GPIO_PORTB_DATA_R & 0x01) == 0);  //Espera a que se suelte el botón ?? Tal vez haya que comentar esto
+		pvelocidad->vel = 1;  														 	 //Activa la señal para entrar a `poner_velocidad`
 	}
 
-	if(vel == 1) {
-		speed = poner_velocidad(speed, RPM_min, RPM_max, RPM_adj);	//Llama a 'poner_velocidad'
-		vel = 0;  //Reinicia la señal de velocidad para volver a esperar otra pulsación
+	if(pvelocidad->vel == 1) {
+		Poner_Vel_Update(pvelocidad);	//Llama a 'poner_velocidad'
+		pvelocidad->vel = 0;  //Reinicia la señal de velocidad para volver a esperar otra pulsación
 	}
 }
 
+void Poner_Vel_Update(poner_vel *pvelocidad){
+  do{
+    //Mientras el boton siga pulsado no hacer nada, hasta que se suelte
+    //Leo el estado del boton
+    pvelocidad->SWST = GPIO_PORTJ_DATA_R;
+
+    //If para disminuir la velocidad del motor
+    //Si PJ0 = 0x01 (esta pulsado), disminuyo los RPM segun el valor en RPM_adj en cada pulsación
+    if(pvelocidad->SWST == 0x01) {
+      if(pvelocidad->RPM <= pvelocidad->RPM_min){
+        //no hacer nada
+      }else{
+        pvelocidad->RPM -= pvelocidad->RPM_adj;	//Decrementar los rpm segun RPM_adj
+        //Si el valor de rpm es menor o igual a 0, entonces lo hago cero para apagar el motor
+        //pero si no es menor disminuyo en 5%.
+        if(pvelocidad->RPM <= pvelocidad->RPM_adj){
+          pvelocidad->RPM = pvelocidad->RPM_min;	//Apago el motor
+        }
+        velocidaddeseada((uint16_t)pvelocidad->RPM); //TRANSMITO AL MAX7219
+        //Mientras siga pulsado el boton, no hago nada.
+        //Esto es para evitar que se siga ejecutando el if()
+        while (GPIO_PORTJ_DATA_R == 0x01) {} // Esperar hasta soltar el botón
+      }
+    }
+
+    //If para aumentar la velocidad del motor
+    //Si PJ1 = 0x02 (esta pulsado), aumento los RPM segun el valor en RPM_adj en cada pulsación
+    if(pvelocidad->SWST == 0x02) {
+      if (pvelocidad->RPM >= pvelocidad->RPM_max){
+        //no hacer nada
+      }else{
+        pvelocidad->RPM += pvelocidad->RPM_adj;	//Incrementar los rpm segun RPM_adj
+        //Si el valor de rpm sobrepasa los 130 rpm, el valor maximo de rpm
+        if(pvelocidad->RPM >= pvelocidad->RPM_max){
+          pvelocidad->RPM = pvelocidad->RPM_max;	//Mantengo al 100% la velocidad del motor
+        }
+        velocidaddeseada((uint16_t)pvelocidad->RPM);	//TRANSMITO AL MAX7219
+        //Mientras siga pulsado el boton, no hago nada.
+        //Esto es para evitar que se siga ejecutando el if()
+        while (GPIO_PORTJ_DATA_R == 0x02) {} //Esperar hasta soltar el botón
+      }
+    }
+
+    // Condición de salida si se detecta una nueva pulsación en el botón de PortB
+    if((GPIO_PORTB_DATA_R & 0x01) == 0) {
+      while((GPIO_PORTB_DATA_R & 0x01) == 0);  //Espera a que el botón de PortB se suelte
+      break;  																 //Sale del do-while
+    }
+  }while(1);
+}
+
+/*
 float poner_velocidad(float rpm, uint8_t minRPM, uint8_t maxRPM, uint8_t adjRPM){
   do{
     //Mientras el boton siga pulsado no hacer nada, hasta que se suelte
@@ -80,6 +140,7 @@ float poner_velocidad(float rpm, uint8_t minRPM, uint8_t maxRPM, uint8_t adjRPM)
 
 	return rpm;	//Conserva el valor actual en el MAX7219
 }
+*/
 
 //Configuración del puerto B para el boton externo en PB0
 void PuertoB_Conf(void){

@@ -12,3 +12,4 @@ void Max7219_Transmit(uint16_t dato);
 void velocidadreal(uint32_t velocidad);
 void velocidaddeseada(uint32_t velocidad);
 void MAX7219_Ini(void);
+void max7219_config(void);
