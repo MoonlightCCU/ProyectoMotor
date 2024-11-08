@@ -13,30 +13,27 @@
 #include <stdint.h>
 #include "Max7219.h"
 
-// PID structure
+//Estructura poner_vel
 typedef struct {
-  uint8_t RPM_min;
-  uint8_t RPM_max;
-  uint8_t RPM_adj;
-  float RPM;
-  volatile uint8_t vel;
-  volatile uint32_t SWST;
+  uint8_t RPM_min;          //Las RPM min, en nuestro caso cero
+  uint8_t RPM_max;          //Las RPM maximas, en nuestro caso 130
+  uint8_t RPM_adj;          //El tamaño del ajuste para la suma y resta
+  float RPM;                //Las RPM que se desean fijar
+  volatile uint8_t vel;     //Variable Para entrar al menu de fijacion
+  volatile uint32_t SWST;   //Variable para almacenar el estado del boton
 }poner_vel;
 
-void Poner_Vel_Init(poner_vel *, uint8_t, uint8_t, uint8_t,float,volatile uint8_t, volatile uint32_t);
+//Prototipo para la funcion de inicializacion el modulo
+void Poner_Vel_Init(poner_vel *, uint8_t, float);
+
+//Prototipo para la funcion de comprobar la pulsacion del boton B0
 void Poner_Vel_Wait(poner_vel *);
+
+//Prototipo para la funcion de poner o fijar la velocidad
 void Poner_Vel_Update(poner_vel *);
 
+//Prototipos para configurar los botones de los puertos a utilizar (J0, J1 y B0)
 void PuertoB_Conf(void);
 void PuertoJ_Conf(void);
-//extern uint8_t RPM_min;    //RPM minimo
-//extern uint8_t RPM_max;    //RPM maximo
-//extern uint8_t RPM_adj;    //Incremento o Decremento del RPM
-//extern float speed;      //Velocidad inicial
-//extern volatile uint8_t vel;    //Variable de control para entrar a la funcion poner_velocidad()
-//extern volatile uint32_t SWST;  //Variable para almacenar el estado de los botones J0 y J1
-//
-//void wait_input(void);
-//float poner_velocidad(float, uint8_t, uint8_t, uint8_t);
 
 #endif

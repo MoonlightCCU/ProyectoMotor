@@ -54,19 +54,19 @@ void Max7219_Transmit(uint16_t dato){
   SSI0_DR_R = dato;
 }
 
-void velocidadreal(uint32_t velocidad){
-	for (int i = 0; i < 3; i++){
+void velocidadreal(uint16_t velocidad){
+	for (uint8_t i = 0; i < 3; i++){
 		Max7219_Transmit(0x040A);
-		uint32_t valor_transmitir = velocidad % 10;
+		uint16_t valor_transmitir = velocidad % 10;
 		Max7219_Transmit (valor_transmitir + (0x0100 * (i+1)));
 		velocidad = velocidad / 10;
 	}
 }
 
-void velocidaddeseada(uint32_t velocidad){
-	for (int i = 5; i < 8; i++){
+void velocidaddeseada(uint16_t velocidad){
+	for (uint8_t i = 5; i < 8; i++){
 		Max7219_Transmit(0x050A);
-		uint32_t valor_transmitir = velocidad % 10;
+		uint16_t valor_transmitir = velocidad % 10;
 		Max7219_Transmit (valor_transmitir + (0x0100 * (i+1)));
 		velocidad = velocidad / 10;
 	}

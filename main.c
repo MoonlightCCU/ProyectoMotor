@@ -7,27 +7,29 @@
  *      By: Manuel Lucas
  */
 
-#include "PWM.h"
-#include "pvelocidad.h"
-#include "Max7219.h"
-#include "PID.h"
-#include "FPU.h"
-#include "SysTick.h"
-#include "sensor.h"
+#include "PWM.h"          //Modulo 1. PWM para el motor
+#include "pvelocidad.h"   //Modulo 2. para poner velocidad
+#include "Max7219.h"      //Modulo 3. para desplegar el valor actual y el fijado
+#include "PID.h"          //Modulo 4. PID para controlar el motor
+#include "sensor.h"       //Modulo 5. del sensor o modulo de cuadratura (QEI)
+#include "FPU.h"          //Sirve para activar las operaciones de punto flotante
+#include "SysTick.h"      //Sirve para el tiempo de muestreo
 
 int main(void){
   //Activo las operaciones de punto flotante del microcontrolador
   FPU_INIT();
 
+  //Creo estructura pid de tipo PID_Controller
   PID_Controller pid;
   //PID_Init(&pid,Kp,Ki,Kd)
   PID_Init(&pid, 1.0, 0.1, 0.01); // Example gains
 
+  //Creo estructura pvelocidad de tipo poner_vel
   poner_vel pvelocidad;
-  //Poner_Vel_Init(&pvelocidad,RPM_min,RPM_max,RPM_adj,RPM,vel,SWST);
-  Poner_Vel_Init(&pvelocidad, 0, 130, 5, 30.0, 0, 0);
+  //Poner_Vel_Init(&pvelocidad, RPM_adj, RPM);
+  Poner_Vel_Init(&pvelocidad, 5, 30.0);
 
-  // Time step para el PID
+  //Time step para el PID
   float dt = 0.01;
 
   //Configuracion del Max7219
@@ -38,7 +40,7 @@ int main(void){
 
   //Transmito al MAX7219 la velocidad inicial del motor (pvelocidad.RPM)
 	velocidaddeseada((uint16_t)pvelocidad.RPM);
-  
+
   //Tiempo de muestreo dt, en este caso dt = 0.01 segundos
   SysTick_Conf(dt);
 

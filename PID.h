@@ -1,14 +1,16 @@
-// Source https://www.quora.com/How-do-I-implement-a-PID-controller-using-a-Tiva-C-TM4C123G-Launchpad-Cortex-M4
 #include <stdint.h>
 
-// PID structure
+// Estructura PID
 typedef struct {
-  float Kp;          // Proportional gain
-  float Ki;          // Integral gain
-  float Kd;          // Derivative gain
-  float prev_error;  // Previous error
-  float integral;    // Integral value
+  float Kp;          // Ganancia Proporcional
+  float Ki;          // Ganancia Integral
+  float Kd;          // Ganancia Derivativa
+  float prev_error;  // Error Previo
+  float integral;    // Valor de la Integral
 }PID_Controller;
 
+//Prototipo de función que sirve para inicializar los valores del PID
 void PID_Init(PID_Controller *, float, float, float);
+
+//Prototipo de función que sirve para calcular el PID
 float PID_Update(PID_Controller *, float, float, float);

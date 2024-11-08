@@ -1,4 +1,4 @@
-#include "QEI.h"
+#include "sensor.h"
 
 /*
 En este modulo se habilita el QEI0 de la tiva TM4C1294NCPDT, para lo cual se configuran los pines PL1 y PL2 como funciones alternativas y luego se les

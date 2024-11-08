@@ -9,23 +9,20 @@
 
 /*
  *  Función para inicializar el PWM
- *  Recibe dos valores de 8 bits, los cuales son div para divisor del reloj del sistema 
- *  y freq para la frequencia deseada
+ *  Recibe dos valores, uno de 8 bits y otro de 16 bits, los cuales son div para divisor del relojdel
+ *  del sistema y freq para la frequencia deseada
  */
 void conf_Global_PWM0(uint8_t div,uint16_t freq){
 	//Paso 1: Activar el reloj del PWM
 	SYSCTL_RCGCPWM_R |= SYSCTL_RCGCPWM_R0; //Enable and provide a clock to PWM module 0 in Run mode.
 	
 	/*
-    Configurar primero el puerto, después llamar la configuración del PWM
-    Una alternativa podría ser el añadir el inicio del PWM en otra función (PWM0_ENABLE_R)
-
-    Paso 2: Activar el reloj para el puerto a utilizar, en este caso el puerto F
-	  En CONF_PORTS.c
-
-	  Paso 3 y 4: Configurar funcion alternativa
-	  En CONF_PORTS.c
-  */
+   * Configurar primero el puerto, después llamar la configuración del PWM
+   * Una alternativa podría ser el añadir el inicio del PWM en otra función (PWM0_ENABLE_R)
+   *
+   * Paso 2, 3 y 4: Activar el reloj para el puerto a utilizar, en este caso el puerto F y
+   * configurar la funcion alternativa.
+   */
   PuertoF_Conf_PWM();
 
 	//Paso 5: Configuración del PWM Clock (PWMCC). Divisor = 32, entonces (16MHz/32) = 500 KHz = 500000 Hz 
@@ -48,14 +45,11 @@ void conf_Global_PWM0(uint8_t div,uint16_t freq){
 	//Paso 6: Configuro PWM en countdown y configuro los generadores.
 	PWM0_0_CTL_R |= 0x00000000;
 	
-	//Para el GeneradorA, Cuando Cont = Load, entonces PMW0GENA = Low y cuando Cont=CMPA, entonces PMW0GENA = HIGH
-	PWM0_0_GENA_R |= 0x00000048; //No utilizo este generador porque esta conectado a un led de la Tiva C
-	
 	//Para el GeneradorB, Cuando Cont = Load, entonces PMW0GENB = Low y cuando Cont=CMPB, entonces PMW0GENB = HIGH
 	PWM0_0_GENB_R |= 0x0000080C; //Este es el generador que utilizo.
 	
 	//Paso 7: PWM0LOAD. 500Hz, entonces (500KHz/500Hz)=1000
-	PWM0_0_LOAD_R = PWM_LOAD(div,freq);//6250;//PWM_LOAD(div,freq);
+	PWM0_0_LOAD_R = PWM_LOAD(div,freq);
 
 	//Paso 9: M0PWM1 = 50% (deafult) Duty Cycle
 	PWM0_0_CMPB_R = PWM_DUTYC(50,div,freq);
