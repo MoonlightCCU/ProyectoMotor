@@ -31,6 +31,9 @@ int main(void){
 
   //Time step para el PID
   float dt = 0.01;
+  
+  float speed = 0.0;
+  float control_output = 0.0;
 
   //Configuracion del Max7219
 	MAX7219_Ini();
@@ -49,9 +52,10 @@ int main(void){
     //para decidir si se cambia la velocidad de referencia
     Poner_Vel_Wait(&pvelocidad);
 
+    speed = medirvelocidadmotor();
     //Calculo el valor del PID pasandole por referencia la estructura pid, la velocidad
     //deseada, el valor de la velocidad actual y delta de t
-    float control_output = PID_Update(&pid, pvelocidad.RPM, medirvelocidadmotor(), dt);
+    control_output = PID_Update(&pid, pvelocidad.RPM,speed, dt);
 
     //Paso "control_output" al modulo PWM para ajustar la velocidad del motor
     conf_PWM0_GenB(control_output);

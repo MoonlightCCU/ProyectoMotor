@@ -3,11 +3,11 @@
 <title>Static Call Graph - [.\Objects\ProyectoMotorV2.axf]</title></head>
 <body><HR>
 <H1>Static Call Graph for image .\Objects\ProyectoMotorV2.axf</H1><HR>
-<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 6220000: Last Updated: Wed Oct 30 13:22:14 2024
+<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 6220000: Last Updated: Mon Nov 11 18:58:00 2024
 <BR><P>
-<H3>Maximum Stack Usage =         80 bytes + Unknown(Functions without stacksize, Cycles, Untraceable Function Pointers)</H3><H3>
+<H3>Maximum Stack Usage =        124 bytes + Unknown(Functions without stacksize, Cycles, Untraceable Function Pointers)</H3><H3>
 Call chain for Maximum Stack Depth:</H3>
-__rt_entry_main &rArr; main &rArr; poner_velocidad &rArr; PWM_DUTYC &rArr; PWM_LOAD
+__rt_entry_main &rArr; main &rArr; Poner_Vel_Wait &rArr; Poner_Vel_Update &rArr; velocidaddeseada &rArr; Max7219_Transmit
 <P>
 <H3>
 Functions with no stack information
@@ -293,9 +293,9 @@ Global Symbols
 <BR><BR>[Calls]<UL><LI><a href="#[87]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__rt_entry
 </UL>
 
-<P><STRONG><a name="[a1]"></a>__scatterload_rt2_thumb_only</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, __scatter.o(!!!scatter), UNUSED)
+<P><STRONG><a name="[af]"></a>__scatterload_rt2_thumb_only</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, __scatter.o(!!!scatter), UNUSED)
 
-<P><STRONG><a name="[a2]"></a>__scatterload_loop</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, __scatter.o(!!!scatter), UNUSED)
+<P><STRONG><a name="[b0]"></a>__scatterload_loop</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, __scatter.o(!!!scatter), UNUSED)
 
 <P><STRONG><a name="[89]"></a>__scatterload_copy</STRONG> (Thumb, 26 bytes, Stack size unknown bytes, __scatter_copy.o(!!handler_copy), UNUSED)
 <BR><BR>[Calls]<UL><LI><a href="#[89]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__scatterload_copy
@@ -303,9 +303,9 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[89]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__scatterload_copy
 </UL>
 
-<P><STRONG><a name="[a3]"></a>__scatterload_null</STRONG> (Thumb, 2 bytes, Stack size unknown bytes, __scatter.o(!!handler_null), UNUSED)
+<P><STRONG><a name="[b1]"></a>__scatterload_null</STRONG> (Thumb, 2 bytes, Stack size unknown bytes, __scatter.o(!!handler_null), UNUSED)
 
-<P><STRONG><a name="[a4]"></a>__scatterload_zeroinit</STRONG> (Thumb, 28 bytes, Stack size unknown bytes, __scatter_zi.o(!!handler_zi), UNUSED)
+<P><STRONG><a name="[b2]"></a>__scatterload_zeroinit</STRONG> (Thumb, 28 bytes, Stack size unknown bytes, __scatter_zi.o(!!handler_zi), UNUSED)
 
 <P><STRONG><a name="[8f]"></a>__rt_lib_init</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, libinit.o(.ARM.Collect$$libinit$$00000000))
 <BR><BR>[Called By]<UL><LI><a href="#[8e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__rt_entry_li
@@ -315,72 +315,72 @@ Global Symbols
 <BR><BR>[Calls]<UL><LI><a href="#[8b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_fp_init
 </UL>
 
-<P><STRONG><a name="[a5]"></a>__rt_lib_init_alloca_1</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, libinit2.o(.ARM.Collect$$libinit$$00000030))
+<P><STRONG><a name="[b3]"></a>__rt_lib_init_alloca_1</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, libinit2.o(.ARM.Collect$$libinit$$00000030))
 
-<P><STRONG><a name="[a6]"></a>__rt_lib_init_argv_1</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, libinit2.o(.ARM.Collect$$libinit$$0000002E))
+<P><STRONG><a name="[b4]"></a>__rt_lib_init_argv_1</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, libinit2.o(.ARM.Collect$$libinit$$0000002E))
 
-<P><STRONG><a name="[a7]"></a>__rt_lib_init_atexit_1</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, libinit2.o(.ARM.Collect$$libinit$$0000001D))
+<P><STRONG><a name="[b5]"></a>__rt_lib_init_atexit_1</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, libinit2.o(.ARM.Collect$$libinit$$0000001D))
 
-<P><STRONG><a name="[a8]"></a>__rt_lib_init_clock_1</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, libinit2.o(.ARM.Collect$$libinit$$00000023))
+<P><STRONG><a name="[b6]"></a>__rt_lib_init_clock_1</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, libinit2.o(.ARM.Collect$$libinit$$00000023))
 
-<P><STRONG><a name="[a9]"></a>__rt_lib_init_cpp_1</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, libinit2.o(.ARM.Collect$$libinit$$00000034))
+<P><STRONG><a name="[b7]"></a>__rt_lib_init_cpp_1</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, libinit2.o(.ARM.Collect$$libinit$$00000034))
 
-<P><STRONG><a name="[aa]"></a>__rt_lib_init_exceptions_1</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, libinit2.o(.ARM.Collect$$libinit$$00000032))
+<P><STRONG><a name="[b8]"></a>__rt_lib_init_exceptions_1</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, libinit2.o(.ARM.Collect$$libinit$$00000032))
 
-<P><STRONG><a name="[ab]"></a>__rt_lib_init_fp_trap_1</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, libinit2.o(.ARM.Collect$$libinit$$00000021))
+<P><STRONG><a name="[b9]"></a>__rt_lib_init_fp_trap_1</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, libinit2.o(.ARM.Collect$$libinit$$00000021))
 
-<P><STRONG><a name="[ac]"></a>__rt_lib_init_getenv_1</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, libinit2.o(.ARM.Collect$$libinit$$00000025))
+<P><STRONG><a name="[ba]"></a>__rt_lib_init_getenv_1</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, libinit2.o(.ARM.Collect$$libinit$$00000025))
 
-<P><STRONG><a name="[ad]"></a>__rt_lib_init_heap_1</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, libinit2.o(.ARM.Collect$$libinit$$0000000C))
+<P><STRONG><a name="[bb]"></a>__rt_lib_init_heap_1</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, libinit2.o(.ARM.Collect$$libinit$$0000000C))
 
-<P><STRONG><a name="[ae]"></a>__rt_lib_init_lc_collate_1</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, libinit2.o(.ARM.Collect$$libinit$$00000013))
+<P><STRONG><a name="[bc]"></a>__rt_lib_init_lc_collate_1</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, libinit2.o(.ARM.Collect$$libinit$$00000013))
 
-<P><STRONG><a name="[af]"></a>__rt_lib_init_lc_ctype_1</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, libinit2.o(.ARM.Collect$$libinit$$00000015))
+<P><STRONG><a name="[bd]"></a>__rt_lib_init_lc_ctype_1</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, libinit2.o(.ARM.Collect$$libinit$$00000015))
 
-<P><STRONG><a name="[b0]"></a>__rt_lib_init_lc_monetary_1</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, libinit2.o(.ARM.Collect$$libinit$$00000017))
+<P><STRONG><a name="[be]"></a>__rt_lib_init_lc_monetary_1</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, libinit2.o(.ARM.Collect$$libinit$$00000017))
 
-<P><STRONG><a name="[b1]"></a>__rt_lib_init_lc_numeric_1</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, libinit2.o(.ARM.Collect$$libinit$$00000019))
+<P><STRONG><a name="[bf]"></a>__rt_lib_init_lc_numeric_1</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, libinit2.o(.ARM.Collect$$libinit$$00000019))
 
-<P><STRONG><a name="[b2]"></a>__rt_lib_init_lc_time_1</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, libinit2.o(.ARM.Collect$$libinit$$0000001B))
+<P><STRONG><a name="[c0]"></a>__rt_lib_init_lc_time_1</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, libinit2.o(.ARM.Collect$$libinit$$0000001B))
 
-<P><STRONG><a name="[b3]"></a>__rt_lib_init_preinit_1</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, libinit2.o(.ARM.Collect$$libinit$$00000006))
+<P><STRONG><a name="[c1]"></a>__rt_lib_init_preinit_1</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, libinit2.o(.ARM.Collect$$libinit$$00000006))
 
-<P><STRONG><a name="[b4]"></a>__rt_lib_init_rand_1</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, libinit2.o(.ARM.Collect$$libinit$$00000010))
+<P><STRONG><a name="[c2]"></a>__rt_lib_init_rand_1</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, libinit2.o(.ARM.Collect$$libinit$$00000010))
 
-<P><STRONG><a name="[b5]"></a>__rt_lib_init_relocate_pie_1</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, libinit2.o(.ARM.Collect$$libinit$$00000004))
+<P><STRONG><a name="[c3]"></a>__rt_lib_init_relocate_pie_1</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, libinit2.o(.ARM.Collect$$libinit$$00000004))
 
-<P><STRONG><a name="[b6]"></a>__rt_lib_init_return</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, libinit2.o(.ARM.Collect$$libinit$$00000035))
+<P><STRONG><a name="[c4]"></a>__rt_lib_init_return</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, libinit2.o(.ARM.Collect$$libinit$$00000035))
 
-<P><STRONG><a name="[b7]"></a>__rt_lib_init_signal_1</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, libinit2.o(.ARM.Collect$$libinit$$0000001F))
+<P><STRONG><a name="[c5]"></a>__rt_lib_init_signal_1</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, libinit2.o(.ARM.Collect$$libinit$$0000001F))
 
-<P><STRONG><a name="[b8]"></a>__rt_lib_init_stdio_1</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, libinit2.o(.ARM.Collect$$libinit$$00000027))
+<P><STRONG><a name="[c6]"></a>__rt_lib_init_stdio_1</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, libinit2.o(.ARM.Collect$$libinit$$00000027))
 
-<P><STRONG><a name="[b9]"></a>__rt_lib_init_user_alloc_1</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, libinit2.o(.ARM.Collect$$libinit$$0000000E))
+<P><STRONG><a name="[c7]"></a>__rt_lib_init_user_alloc_1</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, libinit2.o(.ARM.Collect$$libinit$$0000000E))
 
 <P><STRONG><a name="[94]"></a>__rt_lib_shutdown</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, libshutdown.o(.ARM.Collect$$libshutdown$$00000000))
 <BR><BR>[Called By]<UL><LI><a href="#[93]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__rt_exit_ls
 </UL>
 
-<P><STRONG><a name="[ba]"></a>__rt_lib_shutdown_cpp_1</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, libshutdown2.o(.ARM.Collect$$libshutdown$$00000002))
+<P><STRONG><a name="[c8]"></a>__rt_lib_shutdown_cpp_1</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, libshutdown2.o(.ARM.Collect$$libshutdown$$00000002))
 
-<P><STRONG><a name="[bb]"></a>__rt_lib_shutdown_fp_trap_1</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, libshutdown2.o(.ARM.Collect$$libshutdown$$00000007))
+<P><STRONG><a name="[c9]"></a>__rt_lib_shutdown_fp_trap_1</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, libshutdown2.o(.ARM.Collect$$libshutdown$$00000007))
 
-<P><STRONG><a name="[bc]"></a>__rt_lib_shutdown_heap_1</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, libshutdown2.o(.ARM.Collect$$libshutdown$$0000000F))
+<P><STRONG><a name="[ca]"></a>__rt_lib_shutdown_heap_1</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, libshutdown2.o(.ARM.Collect$$libshutdown$$0000000F))
 
-<P><STRONG><a name="[bd]"></a>__rt_lib_shutdown_return</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, libshutdown2.o(.ARM.Collect$$libshutdown$$00000010))
+<P><STRONG><a name="[cb]"></a>__rt_lib_shutdown_return</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, libshutdown2.o(.ARM.Collect$$libshutdown$$00000010))
 
-<P><STRONG><a name="[be]"></a>__rt_lib_shutdown_signal_1</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, libshutdown2.o(.ARM.Collect$$libshutdown$$0000000A))
+<P><STRONG><a name="[cc]"></a>__rt_lib_shutdown_signal_1</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, libshutdown2.o(.ARM.Collect$$libshutdown$$0000000A))
 
-<P><STRONG><a name="[bf]"></a>__rt_lib_shutdown_stdio_1</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, libshutdown2.o(.ARM.Collect$$libshutdown$$00000004))
+<P><STRONG><a name="[cd]"></a>__rt_lib_shutdown_stdio_1</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, libshutdown2.o(.ARM.Collect$$libshutdown$$00000004))
 
-<P><STRONG><a name="[c0]"></a>__rt_lib_shutdown_user_alloc_1</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, libshutdown2.o(.ARM.Collect$$libshutdown$$0000000C))
+<P><STRONG><a name="[ce]"></a>__rt_lib_shutdown_user_alloc_1</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, libshutdown2.o(.ARM.Collect$$libshutdown$$0000000C))
 
 <P><STRONG><a name="[87]"></a>__rt_entry</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, __rtentry.o(.ARM.Collect$$rtentry$$00000000))
 <BR><BR>[Called By]<UL><LI><a href="#[88]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__scatterload_rt2
 <LI><a href="#[78]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__main
 </UL>
 
-<P><STRONG><a name="[c1]"></a>__rt_entry_presh_1</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, __rtentry2.o(.ARM.Collect$$rtentry$$00000002))
+<P><STRONG><a name="[cf]"></a>__rt_entry_presh_1</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, __rtentry2.o(.ARM.Collect$$rtentry$$00000002))
 
 <P><STRONG><a name="[8c]"></a>__rt_entry_sh</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, __rtentry4.o(.ARM.Collect$$rtentry$$00000004))
 <BR><BR>[Stack]<UL><LI>Max Depth = 8 + Unknown Stack Size
@@ -393,17 +393,17 @@ Global Symbols
 <BR><BR>[Calls]<UL><LI><a href="#[8f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__rt_lib_init
 </UL>
 
-<P><STRONG><a name="[c2]"></a>__rt_entry_postsh_1</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, __rtentry2.o(.ARM.Collect$$rtentry$$00000009))
+<P><STRONG><a name="[d0]"></a>__rt_entry_postsh_1</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, __rtentry2.o(.ARM.Collect$$rtentry$$00000009))
 
 <P><STRONG><a name="[90]"></a>__rt_entry_main</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, __rtentry2.o(.ARM.Collect$$rtentry$$0000000D))
-<BR><BR>[Stack]<UL><LI>Max Depth = 80 + Unknown Stack Size
-<LI>Call Chain = __rt_entry_main &rArr; main &rArr; poner_velocidad &rArr; PWM_DUTYC &rArr; PWM_LOAD
+<BR><BR>[Stack]<UL><LI>Max Depth = 124 + Unknown Stack Size
+<LI>Call Chain = __rt_entry_main &rArr; main &rArr; Poner_Vel_Wait &rArr; Poner_Vel_Update &rArr; velocidaddeseada &rArr; Max7219_Transmit
 </UL>
 <BR>[Calls]<UL><LI><a href="#[92]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;exit
 <LI><a href="#[91]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
 </UL>
 
-<P><STRONG><a name="[c3]"></a>__rt_entry_postli_1</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, __rtentry2.o(.ARM.Collect$$rtentry$$0000000C))
+<P><STRONG><a name="[d1]"></a>__rt_entry_postli_1</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, __rtentry2.o(.ARM.Collect$$rtentry$$0000000C))
 
 <P><STRONG><a name="[98]"></a>__rt_exit</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, rtexit.o(.ARM.Collect$$rtexit$$00000000))
 <BR><BR>[Called By]<UL><LI><a href="#[92]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;exit
@@ -413,7 +413,7 @@ Global Symbols
 <BR><BR>[Calls]<UL><LI><a href="#[94]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__rt_lib_shutdown
 </UL>
 
-<P><STRONG><a name="[c4]"></a>__rt_exit_prels_1</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, rtexit2.o(.ARM.Collect$$rtexit$$00000002))
+<P><STRONG><a name="[d2]"></a>__rt_exit_prels_1</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, rtexit2.o(.ARM.Collect$$rtexit$$00000002))
 
 <P><STRONG><a name="[95]"></a>__rt_exit_exit</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, rtexit2.o(.ARM.Collect$$rtexit$$00000004))
 <BR><BR>[Calls]<UL><LI><a href="#[96]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_sys_exit
@@ -1324,11 +1324,11 @@ Global Symbols
 <BR><BR>[Called By]<UL><LI><a href="#[8d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__user_setup_stackheap
 </UL>
 
-<P><STRONG><a name="[c5]"></a>__use_two_region_memory</STRONG> (Thumb, 2 bytes, Stack size 0 bytes, heapauxi.o(.text), UNUSED)
+<P><STRONG><a name="[d3]"></a>__use_two_region_memory</STRONG> (Thumb, 2 bytes, Stack size 0 bytes, heapauxi.o(.text), UNUSED)
 
-<P><STRONG><a name="[c6]"></a>__rt_heap_escrow$2region</STRONG> (Thumb, 2 bytes, Stack size 0 bytes, heapauxi.o(.text), UNUSED)
+<P><STRONG><a name="[d4]"></a>__rt_heap_escrow$2region</STRONG> (Thumb, 2 bytes, Stack size 0 bytes, heapauxi.o(.text), UNUSED)
 
-<P><STRONG><a name="[c7]"></a>__rt_heap_expand$2region</STRONG> (Thumb, 2 bytes, Stack size 0 bytes, heapauxi.o(.text), UNUSED)
+<P><STRONG><a name="[d5]"></a>__rt_heap_expand$2region</STRONG> (Thumb, 2 bytes, Stack size 0 bytes, heapauxi.o(.text), UNUSED)
 
 <P><STRONG><a name="[8d]"></a>__user_setup_stackheap</STRONG> (Thumb, 74 bytes, Stack size 8 bytes, sys_stackheap_outer.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 8 + Unknown Stack Size
@@ -1349,100 +1349,201 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[90]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__rt_entry_main
 </UL>
 
-<P><STRONG><a name="[c8]"></a>__user_libspace</STRONG> (Thumb, 8 bytes, Stack size 0 bytes, libspace.o(.text), UNUSED)
+<P><STRONG><a name="[d6]"></a>__user_libspace</STRONG> (Thumb, 8 bytes, Stack size 0 bytes, libspace.o(.text), UNUSED)
 
 <P><STRONG><a name="[97]"></a>__user_perproc_libspace</STRONG> (Thumb, 0 bytes, Stack size 0 bytes, libspace.o(.text))
 <BR><BR>[Called By]<UL><LI><a href="#[8d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__user_setup_stackheap
 </UL>
 
-<P><STRONG><a name="[c9]"></a>__user_perthread_libspace</STRONG> (Thumb, 0 bytes, Stack size 0 bytes, libspace.o(.text), UNUSED)
+<P><STRONG><a name="[d7]"></a>__user_perthread_libspace</STRONG> (Thumb, 0 bytes, Stack size 0 bytes, libspace.o(.text), UNUSED)
 
 <P><STRONG><a name="[96]"></a>_sys_exit</STRONG> (Thumb, 8 bytes, Stack size 0 bytes, sys_exit.o(.text))
 <BR><BR>[Called By]<UL><LI><a href="#[95]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__rt_exit_exit
 </UL>
 
-<P><STRONG><a name="[ca]"></a>__I$use$semihosting</STRONG> (Thumb, 0 bytes, Stack size 0 bytes, use_no_semi.o(.text), UNUSED)
+<P><STRONG><a name="[d8]"></a>__I$use$semihosting</STRONG> (Thumb, 0 bytes, Stack size 0 bytes, use_no_semi.o(.text), UNUSED)
 
-<P><STRONG><a name="[cb]"></a>__use_no_semihosting_swi</STRONG> (Thumb, 2 bytes, Stack size 0 bytes, use_no_semi.o(.text), UNUSED)
+<P><STRONG><a name="[d9]"></a>__use_no_semihosting_swi</STRONG> (Thumb, 2 bytes, Stack size 0 bytes, use_no_semi.o(.text), UNUSED)
 
-<P><STRONG><a name="[cc]"></a>__semihosting_library_function</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, indicate_semi.o(.text), UNUSED)
+<P><STRONG><a name="[da]"></a>__semihosting_library_function</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, indicate_semi.o(.text), UNUSED)
 
-<P><STRONG><a name="[99]"></a>PWM_DUTYC</STRONG> (Thumb, 68 bytes, Stack size 16 bytes, pwm.o(.text.PWM_DUTYC))
-<BR><BR>[Stack]<UL><LI>Max Depth = 24<LI>Call Chain = PWM_DUTYC &rArr; PWM_LOAD
-</UL>
-<BR>[Calls]<UL><LI><a href="#[9a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PWM_LOAD
-</UL>
-<BR>[Called By]<UL><LI><a href="#[9f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;poner_velocidad
-<LI><a href="#[9b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;conf_Global_PWM0
-</UL>
-
-<P><STRONG><a name="[9a]"></a>PWM_LOAD</STRONG> (Thumb, 44 bytes, Stack size 8 bytes, pwm.o(.text.PWM_LOAD))
-<BR><BR>[Stack]<UL><LI>Max Depth = 8<LI>Call Chain = PWM_LOAD
-</UL>
-<BR>[Called By]<UL><LI><a href="#[99]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PWM_DUTYC
-<LI><a href="#[9f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;poner_velocidad
-<LI><a href="#[9b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;conf_Global_PWM0
-</UL>
-
-<P><STRONG><a name="[9e]"></a>PuertoB_conf</STRONG> (Thumb, 126 bytes, Stack size 0 bytes, conf_ports.o(.text.PuertoB_conf))
+<P><STRONG><a name="[a5]"></a>FPU_INIT</STRONG> (Thumb, 18 bytes, Stack size 0 bytes, fpu.o(.text.FPU_INIT))
 <BR><BR>[Called By]<UL><LI><a href="#[91]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
 </UL>
 
-<P><STRONG><a name="[9c]"></a>PuertoF_Conf_PWM</STRONG> (Thumb, 96 bytes, Stack size 0 bytes, conf_ports.o(.text.PuertoF_Conf_PWM))
-<BR><BR>[Called By]<UL><LI><a href="#[9b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;conf_Global_PWM0
+<P><STRONG><a name="[99]"></a>MAX7219_Ini</STRONG> (Thumb, 224 bytes, Stack size 8 bytes, max7219.o(.text.MAX7219_Ini))
+<BR><BR>[Stack]<UL><LI>Max Depth = 20<LI>Call Chain = MAX7219_Ini &rArr; max7219_config &rArr; Max7219_Transmit
+</UL>
+<BR>[Calls]<UL><LI><a href="#[9a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;max7219_config
+</UL>
+<BR>[Called By]<UL><LI><a href="#[91]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
 </UL>
 
-<P><STRONG><a name="[9d]"></a>PuertoJ_Conf</STRONG> (Thumb, 118 bytes, Stack size 0 bytes, conf_ports.o(.text.PuertoJ_Conf))
+<P><STRONG><a name="[ad]"></a>Max7219_Transmit</STRONG> (Thumb, 46 bytes, Stack size 4 bytes, max7219.o(.text.Max7219_Transmit))
+<BR><BR>[Stack]<UL><LI>Max Depth = 4<LI>Call Chain = Max7219_Transmit
+</UL>
+<BR>[Called By]<UL><LI><a href="#[ae]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;velocidadreal
+<LI><a href="#[9a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;max7219_config
+<LI><a href="#[a1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;velocidaddeseada
+</UL>
+
+<P><STRONG><a name="[a6]"></a>PID_Init</STRONG> (Thumb, 48 bytes, Stack size 16 bytes, pid.o(.text.PID_Init))
+<BR><BR>[Stack]<UL><LI>Max Depth = 16<LI>Call Chain = PID_Init
+</UL>
+<BR>[Called By]<UL><LI><a href="#[91]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
+</UL>
+
+<P><STRONG><a name="[a9]"></a>PID_Update</STRONG> (Thumb, 148 bytes, Stack size 28 bytes, pid.o(.text.PID_Update))
+<BR><BR>[Stack]<UL><LI>Max Depth = 28<LI>Call Chain = PID_Update
+</UL>
+<BR>[Called By]<UL><LI><a href="#[91]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
+</UL>
+
+<P><STRONG><a name="[9b]"></a>PWM_DUTYC</STRONG> (Thumb, 68 bytes, Stack size 16 bytes, pwm.o(.text.PWM_DUTYC))
+<BR><BR>[Stack]<UL><LI>Max Depth = 24<LI>Call Chain = PWM_DUTYC &rArr; PWM_LOAD
+</UL>
+<BR>[Calls]<UL><LI><a href="#[9c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PWM_LOAD
+</UL>
+<BR>[Called By]<UL><LI><a href="#[a3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;conf_Global_PWM0
+</UL>
+
+<P><STRONG><a name="[9c]"></a>PWM_LOAD</STRONG> (Thumb, 44 bytes, Stack size 8 bytes, pwm.o(.text.PWM_LOAD))
+<BR><BR>[Stack]<UL><LI>Max Depth = 8<LI>Call Chain = PWM_LOAD
+</UL>
+<BR>[Called By]<UL><LI><a href="#[9b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PWM_DUTYC
+<LI><a href="#[a3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;conf_Global_PWM0
+</UL>
+
+<P><STRONG><a name="[9d]"></a>Poner_Vel_Init</STRONG> (Thumb, 60 bytes, Stack size 24 bytes, pvelocidad.o(.text.Poner_Vel_Init))
+<BR><BR>[Stack]<UL><LI>Max Depth = 24<LI>Call Chain = Poner_Vel_Init
+</UL>
+<BR>[Calls]<UL><LI><a href="#[9f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PuertoJ_Conf
+<LI><a href="#[9e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PuertoB_Conf
+</UL>
+<BR>[Called By]<UL><LI><a href="#[91]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
+</UL>
+
+<P><STRONG><a name="[a0]"></a>Poner_Vel_Update</STRONG> (Thumb, 380 bytes, Stack size 16 bytes, pvelocidad.o(.text.Poner_Vel_Update))
+<BR><BR>[Stack]<UL><LI>Max Depth = 44<LI>Call Chain = Poner_Vel_Update &rArr; velocidaddeseada &rArr; Max7219_Transmit
+</UL>
+<BR>[Calls]<UL><LI><a href="#[a1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;velocidaddeseada
+</UL>
+<BR>[Called By]<UL><LI><a href="#[a2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Poner_Vel_Wait
+</UL>
+
+<P><STRONG><a name="[a2]"></a>Poner_Vel_Wait</STRONG> (Thumb, 78 bytes, Stack size 16 bytes, pvelocidad.o(.text.Poner_Vel_Wait))
+<BR><BR>[Stack]<UL><LI>Max Depth = 60<LI>Call Chain = Poner_Vel_Wait &rArr; Poner_Vel_Update &rArr; velocidaddeseada &rArr; Max7219_Transmit
+</UL>
+<BR>[Calls]<UL><LI><a href="#[a0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Poner_Vel_Update
+</UL>
+<BR>[Called By]<UL><LI><a href="#[91]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
+</UL>
+
+<P><STRONG><a name="[9e]"></a>PuertoB_Conf</STRONG> (Thumb, 120 bytes, Stack size 0 bytes, pvelocidad.o(.text.PuertoB_Conf))
+<BR><BR>[Called By]<UL><LI><a href="#[9d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Poner_Vel_Init
+</UL>
+
+<P><STRONG><a name="[a4]"></a>PuertoF_Conf_PWM</STRONG> (Thumb, 96 bytes, Stack size 0 bytes, pwm.o(.text.PuertoF_Conf_PWM))
+<BR><BR>[Called By]<UL><LI><a href="#[a3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;conf_Global_PWM0
+</UL>
+
+<P><STRONG><a name="[9f]"></a>PuertoJ_Conf</STRONG> (Thumb, 118 bytes, Stack size 0 bytes, pvelocidad.o(.text.PuertoJ_Conf))
+<BR><BR>[Called By]<UL><LI><a href="#[9d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Poner_Vel_Init
+</UL>
+
+<P><STRONG><a name="[a7]"></a>SysTick_Conf</STRONG> (Thumb, 76 bytes, Stack size 8 bytes, systick.o(.text.SysTick_Conf))
+<BR><BR>[Stack]<UL><LI>Max Depth = 8<LI>Call Chain = SysTick_Conf
+</UL>
+<BR>[Called By]<UL><LI><a href="#[91]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
+</UL>
+
+<P><STRONG><a name="[ab]"></a>SysTick_Init</STRONG> (Thumb, 18 bytes, Stack size 0 bytes, systick.o(.text.SysTick_Init))
+<BR><BR>[Called By]<UL><LI><a href="#[91]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
+</UL>
+
+<P><STRONG><a name="[ac]"></a>SysTick_Stop</STRONG> (Thumb, 26 bytes, Stack size 0 bytes, systick.o(.text.SysTick_Stop))
 <BR><BR>[Called By]<UL><LI><a href="#[91]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
 </UL>
 
 <P><STRONG><a name="[77]"></a>SystemInit</STRONG> (Thumb, 36 bytes, Stack size 0 bytes, system_tm4c129.o(.text.SystemInit))
 <BR>[Address Reference Count : 1]<UL><LI> startup_tm4c129.o(.text)
 </UL>
-<P><STRONG><a name="[9b]"></a>conf_Global_PWM0</STRONG> (Thumb, 370 bytes, Stack size 24 bytes, pwm.o(.text.conf_Global_PWM0))
-<BR><BR>[Stack]<UL><LI>Max Depth = 48<LI>Call Chain = conf_Global_PWM0 &rArr; PWM_DUTYC &rArr; PWM_LOAD
+<P><STRONG><a name="[a3]"></a>conf_Global_PWM0</STRONG> (Thumb, 342 bytes, Stack size 16 bytes, pwm.o(.text.conf_Global_PWM0))
+<BR><BR>[Stack]<UL><LI>Max Depth = 40<LI>Call Chain = conf_Global_PWM0 &rArr; PWM_DUTYC &rArr; PWM_LOAD
 </UL>
-<BR>[Calls]<UL><LI><a href="#[99]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PWM_DUTYC
-<LI><a href="#[9a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PWM_LOAD
-<LI><a href="#[9c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PuertoF_Conf_PWM
+<BR>[Calls]<UL><LI><a href="#[9b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PWM_DUTYC
+<LI><a href="#[9c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PWM_LOAD
+<LI><a href="#[a4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PuertoF_Conf_PWM
 </UL>
 <BR>[Called By]<UL><LI><a href="#[91]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
 </UL>
 
-<P><STRONG><a name="[a0]"></a>conf_PWM0_GenB</STRONG> (Thumb, 24 bytes, Stack size 4 bytes, pwm.o(.text.conf_PWM0_GenB))
-<BR><BR>[Stack]<UL><LI>Max Depth = 4<LI>Call Chain = conf_PWM0_GenB
+<P><STRONG><a name="[aa]"></a>conf_PWM0_GenB</STRONG> (Thumb, 56 bytes, Stack size 8 bytes, pwm.o(.text.conf_PWM0_GenB))
+<BR><BR>[Stack]<UL><LI>Max Depth = 8<LI>Call Chain = conf_PWM0_GenB
 </UL>
-<BR>[Called By]<UL><LI><a href="#[9f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;poner_velocidad
+<BR>[Called By]<UL><LI><a href="#[91]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
 </UL>
 
-<P><STRONG><a name="[91]"></a>main</STRONG> (Thumb, 154 bytes, Stack size 24 bytes, main.o(.text.main))
-<BR><BR>[Stack]<UL><LI>Max Depth = 80<LI>Call Chain = main &rArr; poner_velocidad &rArr; PWM_DUTYC &rArr; PWM_LOAD
+<P><STRONG><a name="[91]"></a>main</STRONG> (Thumb, 176 bytes, Stack size 64 bytes, main.o(.text.main))
+<BR><BR>[Stack]<UL><LI>Max Depth = 124<LI>Call Chain = main &rArr; Poner_Vel_Wait &rArr; Poner_Vel_Update &rArr; velocidaddeseada &rArr; Max7219_Transmit
 </UL>
-<BR>[Calls]<UL><LI><a href="#[9f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;poner_velocidad
-<LI><a href="#[9b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;conf_Global_PWM0
-<LI><a href="#[9e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PuertoB_conf
-<LI><a href="#[9d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PuertoJ_Conf
+<BR>[Calls]<UL><LI><a href="#[ac]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SysTick_Stop
+<LI><a href="#[ab]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SysTick_Init
+<LI><a href="#[aa]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;conf_PWM0_GenB
+<LI><a href="#[a9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PID_Update
+<LI><a href="#[a8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;medirvelocidadmotor
+<LI><a href="#[a2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Poner_Vel_Wait
+<LI><a href="#[a7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SysTick_Conf
+<LI><a href="#[a1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;velocidaddeseada
+<LI><a href="#[a3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;conf_Global_PWM0
+<LI><a href="#[99]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;MAX7219_Ini
+<LI><a href="#[9d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Poner_Vel_Init
+<LI><a href="#[a6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PID_Init
+<LI><a href="#[a5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;FPU_INIT
 </UL>
 <BR>[Called By]<UL><LI><a href="#[90]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__rt_entry_main
 </UL>
 
-<P><STRONG><a name="[9f]"></a>poner_velocidad</STRONG> (Thumb, 340 bytes, Stack size 32 bytes, pvelocidad.o(.text.poner_velocidad))
-<BR><BR>[Stack]<UL><LI>Max Depth = 56<LI>Call Chain = poner_velocidad &rArr; PWM_DUTYC &rArr; PWM_LOAD
+<P><STRONG><a name="[9a]"></a>max7219_config</STRONG> (Thumb, 100 bytes, Stack size 8 bytes, max7219.o(.text.max7219_config))
+<BR><BR>[Stack]<UL><LI>Max Depth = 12<LI>Call Chain = max7219_config &rArr; Max7219_Transmit
 </UL>
-<BR>[Calls]<UL><LI><a href="#[a0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;conf_PWM0_GenB
-<LI><a href="#[99]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PWM_DUTYC
-<LI><a href="#[9a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PWM_LOAD
+<BR>[Calls]<UL><LI><a href="#[ad]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Max7219_Transmit
+</UL>
+<BR>[Called By]<UL><LI><a href="#[99]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;MAX7219_Ini
+</UL>
+
+<P><STRONG><a name="[a8]"></a>medirvelocidadmotor</STRONG> (Thumb, 72 bytes, Stack size 16 bytes, sensor.o(.text.medirvelocidadmotor))
+<BR><BR>[Stack]<UL><LI>Max Depth = 44<LI>Call Chain = medirvelocidadmotor &rArr; velocidadreal &rArr; Max7219_Transmit
+</UL>
+<BR>[Calls]<UL><LI><a href="#[ae]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;velocidadreal
 </UL>
 <BR>[Called By]<UL><LI><a href="#[91]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
+</UL>
+
+<P><STRONG><a name="[a1]"></a>velocidaddeseada</STRONG> (Thumb, 118 bytes, Stack size 24 bytes, max7219.o(.text.velocidaddeseada))
+<BR><BR>[Stack]<UL><LI>Max Depth = 28<LI>Call Chain = velocidaddeseada &rArr; Max7219_Transmit
+</UL>
+<BR>[Calls]<UL><LI><a href="#[ad]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Max7219_Transmit
+</UL>
+<BR>[Called By]<UL><LI><a href="#[a0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Poner_Vel_Update
+<LI><a href="#[91]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
+</UL>
+
+<P><STRONG><a name="[ae]"></a>velocidadreal</STRONG> (Thumb, 118 bytes, Stack size 24 bytes, max7219.o(.text.velocidadreal))
+<BR><BR>[Stack]<UL><LI>Max Depth = 28<LI>Call Chain = velocidadreal &rArr; Max7219_Transmit
+</UL>
+<BR>[Calls]<UL><LI><a href="#[ad]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Max7219_Transmit
+</UL>
+<BR>[Called By]<UL><LI><a href="#[a8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;medirvelocidadmotor
 </UL>
 
 <P><STRONG><a name="[8b]"></a>_fp_init</STRONG> (Thumb, 26 bytes, Stack size 0 bytes, fpinit.o(x$fpl$fpinit))
 <BR><BR>[Called By]<UL><LI><a href="#[8a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__rt_lib_init_fp_1
 </UL>
 
-<P><STRONG><a name="[cd]"></a>__fplib_config_fpu_vfp</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, fpinit.o(x$fpl$fpinit), UNUSED)
+<P><STRONG><a name="[db]"></a>__fplib_config_fpu_vfp</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, fpinit.o(x$fpl$fpinit), UNUSED)
 
-<P><STRONG><a name="[ce]"></a>__fplib_config_pureend_doubles</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, fpinit.o(x$fpl$fpinit), UNUSED)
+<P><STRONG><a name="[dc]"></a>__fplib_config_pureend_doubles</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, fpinit.o(x$fpl$fpinit), UNUSED)
 <P>
 <H3>
 Local Symbols

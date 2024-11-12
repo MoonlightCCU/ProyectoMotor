@@ -1,2 +1,2 @@
-./objects/pvelocidad.o: pvelocidad.c pvelocidad.h PWM.h tm4c1294ncpdt.h \
-  CONF_PORTS.h
+./objects/pvelocidad.o: pvelocidad.c pvelocidad.h Max7219.h \
+  tm4c1294ncpdt.h

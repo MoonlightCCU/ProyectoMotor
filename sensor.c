@@ -4,6 +4,10 @@
 En este modulo se habilita el QEI0 de la tiva TM4C1294NCPDT, para lo cual se configuran los pines PL1 y PL2 como funciones alternativas y luego se les
 asiga QEI, se activa el modo de captura de velocidad del QEI0 y se asigna un load de 15999999, para capturar el total de los pulsos del encoder en un 
 segundo.
+
+Indx0 -> PL3
+PhA -> PL1 (Cable amarillo motor)
+PhB -> PL2 (Cable verde motor)
 */
 
 // Inicialización del módulo QEI (Quadrature Encoder Interface)
@@ -57,7 +61,9 @@ float medirvelocidadmotor(void){
 
   // Calcular las RPM usando la fórmula: rpm = (pulsos / PPR) * 60.
   // Asumiendo que el PPR (Pulsos por revolución) es 2240, de acuerdo con las especificaciones del encoder.
-  float rpm = (speed / 2240) * 60;
+  float rpm = (speed / 224) * 6;
+
+  velocidadreal(rpm);
 
   return rpm; // Retorna el valor calculado en RPM.
 }
