@@ -15,6 +15,7 @@ void Poner_Vel_Init(poner_vel *pvelocidad, uint8_t RPM_adj, float RPM){
   pvelocidad->RPM_max = 130;
   pvelocidad->RPM_adj = RPM_adj;
   pvelocidad->RPM = RPM;
+  pvelocidad->RPM_prev = RPM;
   pvelocidad->vel = 0;
   pvelocidad->SWST = 0;
   PuertoB_Conf();
@@ -44,52 +45,52 @@ void Poner_Vel_Update(poner_vel *pvelocidad){
     //If para disminuir la velocidad del motor
     //Si PJ = 0x01 (esta pulsado PJ1), disminuyo los RPM segun el valor en RPM_adj en cada pulsación
     if(pvelocidad->SWST == 0x01) {
-      if(pvelocidad->RPM <= pvelocidad->RPM_min){
+      if((uint8_t)pvelocidad->RPM <= pvelocidad->RPM_min){
         //no hacer nada
       }else{
         pvelocidad->RPM -= pvelocidad->RPM_adj; //Decrementar los rpm segun RPM_adj
         //Si el valor de rpm es menor o igual a 0, entonces lo hago cero para apagar el motor
         //pero si no es menor disminuyo en 5.
-        if(pvelocidad->RPM <= pvelocidad->RPM_adj){
+        if((uint8_t)pvelocidad->RPM <= pvelocidad->RPM_adj){
           pvelocidad->RPM = pvelocidad->RPM_min;	//Apago el motor
         }
         velocidaddeseada((uint16_t)pvelocidad->RPM); //TRANSMITO AL MAX7219
 
         //Mientras siga pulsado el boton, no hago nada.
         //Esto es para evitar que se siga ejecutando el if()
-        while (GPIO_PORTJ_DATA_R == 0x01) {} // Esperar hasta soltar el botón
+        while(GPIO_PORTJ_DATA_R == 0x01){} // Esperar hasta soltar el botón
       }
     }
 
     //If para aumentar la velocidad del motor
     //Si PJ = 0x02 (esta pulsado PJ0), aumento los RPM segun el valor en RPM_adj en cada pulsación
     if(pvelocidad->SWST == 0x02) {
-      if (pvelocidad->RPM >= pvelocidad->RPM_max){
+      if ((uint8_t)pvelocidad->RPM >= pvelocidad->RPM_max){
         //no hacer nada
       }else{
         pvelocidad->RPM += pvelocidad->RPM_adj; //Incrementar los rpm segun RPM_adj
         //Si el valor de rpm sobrepasa los 130 rpm o es igual, fijo el valor maximo de rpm
-        if(pvelocidad->RPM >= pvelocidad->RPM_max){
+        if((uint8_t)pvelocidad->RPM >= pvelocidad->RPM_max){
           pvelocidad->RPM = pvelocidad->RPM_max;  //Mantengo al 100% la velocidad del motor
         }
         velocidaddeseada((uint16_t)pvelocidad->RPM); //TRANSMITO AL MAX7219
 
         //Mientras siga pulsado el boton, no hago nada.
         //Esto es para evitar que se siga ejecutando el if()
-        while (GPIO_PORTJ_DATA_R == 0x02) {} //Esperar hasta soltar el botón
+        while(GPIO_PORTJ_DATA_R == 0x02){} //Esperar hasta soltar el botón
       }
     }
 
     // Condición de salida si se detecta una nueva pulsación en el botón de PortB
     if((GPIO_PORTB_DATA_R & 0x01) == 0) {
-      while((GPIO_PORTB_DATA_R & 0x01) == 0);  //Espera a que el botón de PortB se suelte
+      while((GPIO_PORTB_DATA_R & 0x01) == 0){}  //Espera a que el botón de PortB se suelte
       break;                                   //Sale del do-while
     }
   }while(1);
 }
 
 //Configuración del puerto B para el boton externo en PB0
-void PuertoB_Conf(void){
+void PuertoB_Conf(){
   SYSCTL_RCGCGPIO_R |= SYSCTL_RCGCGPIO_R1;          //Activa puerto B
   while((SYSCTL_PRGPIO_R & SYSCTL_PRGPIO_R1)==0){}  //Espera a que puerto B este listo
   GPIO_PORTB_DIR_R = 0x00;      //Pin 0 como entrada PB0
@@ -101,7 +102,7 @@ void PuertoB_Conf(void){
 }
 
 //Configuración del puerto J para el los botones de la Tiva 
-void PuertoJ_Conf(void){
+void PuertoJ_Conf(){
 	SYSCTL_RCGCGPIO_R |= SYSCTL_RCGCGPIO_R8;         //Activa puerto J
 	while((SYSCTL_PRGPIO_R & SYSCTL_PRGPIO_R8)==0){} //Espera a que puerto J este listo
 	GPIO_PORTJ_DIR_R = 0x00;      //Pin 0 y 1 como entrada, PJ0 y PJ1
