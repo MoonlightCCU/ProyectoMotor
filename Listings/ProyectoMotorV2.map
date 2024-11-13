@@ -5,18 +5,12 @@ Component: Arm Compiler for Embedded 6.22 Tool: armlink [5ee90200]
 Section Cross References
 
     main.o(.text.main) refers to fpu.o(.text.FPU_INIT) for FPU_INIT
-    main.o(.text.main) refers to pid.o(.text.PID_Init) for PID_Init
     main.o(.text.main) refers to pvelocidad.o(.text.Poner_Vel_Init) for Poner_Vel_Init
     main.o(.text.main) refers to max7219.o(.text.MAX7219_Ini) for MAX7219_Ini
     main.o(.text.main) refers to pwm.o(.text.conf_Global_PWM0) for conf_Global_PWM0
     main.o(.text.main) refers to max7219.o(.text.velocidaddeseada) for velocidaddeseada
-    main.o(.text.main) refers to systick.o(.text.SysTick_Conf) for SysTick_Conf
     main.o(.text.main) refers to pvelocidad.o(.text.Poner_Vel_Wait) for Poner_Vel_Wait
-    main.o(.text.main) refers to sensor.o(.text.medirvelocidadmotor) for medirvelocidadmotor
-    main.o(.text.main) refers to pid.o(.text.PID_Update) for PID_Update
     main.o(.text.main) refers to pwm.o(.text.conf_PWM0_GenB) for conf_PWM0_GenB
-    main.o(.text.main) refers to systick.o(.text.SysTick_Init) for SysTick_Init
-    main.o(.text.main) refers to systick.o(.text.SysTick_Stop) for SysTick_Stop
     main.o(.ARM.exidx.text.main) refers to main.o(.text.main) for [Anonymous Symbol]
     pwm.o(.text.conf_Global_PWM0) refers to pwm.o(.text.PuertoF_Conf_PWM) for PuertoF_Conf_PWM
     pwm.o(.text.conf_Global_PWM0) refers to pwm.o(.text.PWM_LOAD) for PWM_LOAD
@@ -201,25 +195,32 @@ Removing Unused input sections from the image.
     Removing max7219.o(.ARM.exidx.text.MAX7219_Ini), (8 bytes).
     Removing max7219.o(.ARM.exidx.text.max7219_config), (8 bytes).
     Removing max7219.o(.ARM.exidx.text.Max7219_Transmit), (8 bytes).
+    Removing max7219.o(.text.velocidadreal), (118 bytes).
     Removing max7219.o(.ARM.exidx.text.velocidadreal), (8 bytes).
     Removing max7219.o(.ARM.exidx.text.velocidaddeseada), (8 bytes).
     Removing pid.o(.text), (0 bytes).
+    Removing pid.o(.text.PID_Init), (48 bytes).
     Removing pid.o(.ARM.exidx.text.PID_Init), (8 bytes).
+    Removing pid.o(.text.PID_Update), (148 bytes).
     Removing pid.o(.ARM.exidx.text.PID_Update), (8 bytes).
     Removing sensor.o(.text), (0 bytes).
     Removing sensor.o(.text.QEI_init), (192 bytes).
     Removing sensor.o(.ARM.exidx.text.QEI_init), (8 bytes).
+    Removing sensor.o(.text.medirvelocidadmotor), (76 bytes).
     Removing sensor.o(.ARM.exidx.text.medirvelocidadmotor), (8 bytes).
     Removing systick.o(.text), (0 bytes).
+    Removing systick.o(.text.SysTick_Conf), (80 bytes).
     Removing systick.o(.ARM.exidx.text.SysTick_Conf), (8 bytes).
+    Removing systick.o(.text.SysTick_Init), (18 bytes).
     Removing systick.o(.ARM.exidx.text.SysTick_Init), (8 bytes).
+    Removing systick.o(.text.SysTick_Stop), (26 bytes).
     Removing systick.o(.ARM.exidx.text.SysTick_Stop), (8 bytes).
     Removing system_tm4c129.o(.text), (0 bytes).
     Removing system_tm4c129.o(.text.SystemCoreClockUpdate), (20 bytes).
     Removing system_tm4c129.o(.ARM.exidx.text.SystemCoreClockUpdate), (8 bytes).
     Removing system_tm4c129.o(.ARM.exidx.text.SystemInit), (8 bytes).
 
-38 unused section(s) (total 424 bytes) removed from the image.
+45 unused section(s) (total 938 bytes) removed from the image.
 
 ==============================================================================
 
@@ -351,29 +352,22 @@ Image Symbol Table
     [Anonymous Symbol]                       0x00000474   Section        0  fpu.o(.text.FPU_INIT)
     [Anonymous Symbol]                       0x00000488   Section        0  max7219.o(.text.MAX7219_Ini)
     [Anonymous Symbol]                       0x00000568   Section        0  max7219.o(.text.Max7219_Transmit)
-    [Anonymous Symbol]                       0x00000598   Section        0  pid.o(.text.PID_Init)
-    [Anonymous Symbol]                       0x000005c8   Section        0  pid.o(.text.PID_Update)
-    [Anonymous Symbol]                       0x0000065c   Section        0  pwm.o(.text.PWM_DUTYC)
-    [Anonymous Symbol]                       0x000006a0   Section        0  pwm.o(.text.PWM_LOAD)
-    [Anonymous Symbol]                       0x000006cc   Section        0  pvelocidad.o(.text.Poner_Vel_Init)
-    [Anonymous Symbol]                       0x00000708   Section        0  pvelocidad.o(.text.Poner_Vel_Update)
-    [Anonymous Symbol]                       0x00000884   Section        0  pvelocidad.o(.text.Poner_Vel_Wait)
-    [Anonymous Symbol]                       0x000008d4   Section        0  pvelocidad.o(.text.PuertoB_Conf)
-    [Anonymous Symbol]                       0x0000094c   Section        0  pwm.o(.text.PuertoF_Conf_PWM)
-    [Anonymous Symbol]                       0x000009ac   Section        0  pvelocidad.o(.text.PuertoJ_Conf)
-    [Anonymous Symbol]                       0x00000a24   Section        0  systick.o(.text.SysTick_Conf)
-    [Anonymous Symbol]                       0x00000a74   Section        0  systick.o(.text.SysTick_Init)
-    [Anonymous Symbol]                       0x00000a88   Section        0  systick.o(.text.SysTick_Stop)
-    [Anonymous Symbol]                       0x00000aa4   Section        0  system_tm4c129.o(.text.SystemInit)
-    [Anonymous Symbol]                       0x00000ac8   Section        0  pwm.o(.text.conf_Global_PWM0)
-    [Anonymous Symbol]                       0x00000c20   Section        0  pwm.o(.text.conf_PWM0_GenB)
-    [Anonymous Symbol]                       0x00000c60   Section        0  main.o(.text.main)
-    [Anonymous Symbol]                       0x00000d18   Section        0  max7219.o(.text.max7219_config)
-    [Anonymous Symbol]                       0x00000d7c   Section        0  sensor.o(.text.medirvelocidadmotor)
-    [Anonymous Symbol]                       0x00000dc8   Section        0  max7219.o(.text.velocidaddeseada)
-    [Anonymous Symbol]                       0x00000e40   Section        0  max7219.o(.text.velocidadreal)
-    $v0                                      0x00000eb6   Number         0  fpinit.o(x$fpl$fpinit)
-    x$fpl$fpinit                             0x00000eb6   Section       26  fpinit.o(x$fpl$fpinit)
+    [Anonymous Symbol]                       0x00000598   Section        0  pwm.o(.text.PWM_DUTYC)
+    [Anonymous Symbol]                       0x000005dc   Section        0  pwm.o(.text.PWM_LOAD)
+    [Anonymous Symbol]                       0x00000608   Section        0  pvelocidad.o(.text.Poner_Vel_Init)
+    [Anonymous Symbol]                       0x0000064c   Section        0  pvelocidad.o(.text.Poner_Vel_Update)
+    [Anonymous Symbol]                       0x000007b0   Section        0  pvelocidad.o(.text.Poner_Vel_Wait)
+    [Anonymous Symbol]                       0x00000800   Section        0  pvelocidad.o(.text.PuertoB_Conf)
+    [Anonymous Symbol]                       0x00000878   Section        0  pwm.o(.text.PuertoF_Conf_PWM)
+    [Anonymous Symbol]                       0x000008d8   Section        0  pvelocidad.o(.text.PuertoJ_Conf)
+    [Anonymous Symbol]                       0x00000950   Section        0  system_tm4c129.o(.text.SystemInit)
+    [Anonymous Symbol]                       0x00000974   Section        0  pwm.o(.text.conf_Global_PWM0)
+    [Anonymous Symbol]                       0x00000acc   Section        0  pwm.o(.text.conf_PWM0_GenB)
+    [Anonymous Symbol]                       0x00000b54   Section        0  main.o(.text.main)
+    [Anonymous Symbol]                       0x00000bb8   Section        0  max7219.o(.text.max7219_config)
+    [Anonymous Symbol]                       0x00000c1c   Section        0  max7219.o(.text.velocidaddeseada)
+    $v0                                      0x00000c92   Number         0  fpinit.o(x$fpl$fpinit)
+    x$fpl$fpinit                             0x00000c92   Section       26  fpinit.o(x$fpl$fpinit)
     .bss                                     0x20000008   Section       96  libspace.o(.bss)
     Heap_Mem                                 0x20000068   Data           0  startup_tm4c129.o(HEAP)
     Stack_Mem                                0x20000068   Data         512  startup_tm4c129.o(STACK)
@@ -615,32 +609,25 @@ Image Symbol Table
     FPU_INIT                                 0x00000475   Thumb Code    18  fpu.o(.text.FPU_INIT)
     MAX7219_Ini                              0x00000489   Thumb Code   224  max7219.o(.text.MAX7219_Ini)
     Max7219_Transmit                         0x00000569   Thumb Code    46  max7219.o(.text.Max7219_Transmit)
-    PID_Init                                 0x00000599   Thumb Code    48  pid.o(.text.PID_Init)
-    PID_Update                               0x000005c9   Thumb Code   148  pid.o(.text.PID_Update)
-    PWM_DUTYC                                0x0000065d   Thumb Code    68  pwm.o(.text.PWM_DUTYC)
-    PWM_LOAD                                 0x000006a1   Thumb Code    44  pwm.o(.text.PWM_LOAD)
-    Poner_Vel_Init                           0x000006cd   Thumb Code    60  pvelocidad.o(.text.Poner_Vel_Init)
-    Poner_Vel_Update                         0x00000709   Thumb Code   380  pvelocidad.o(.text.Poner_Vel_Update)
-    Poner_Vel_Wait                           0x00000885   Thumb Code    78  pvelocidad.o(.text.Poner_Vel_Wait)
-    PuertoB_Conf                             0x000008d5   Thumb Code   120  pvelocidad.o(.text.PuertoB_Conf)
-    PuertoF_Conf_PWM                         0x0000094d   Thumb Code    96  pwm.o(.text.PuertoF_Conf_PWM)
-    PuertoJ_Conf                             0x000009ad   Thumb Code   118  pvelocidad.o(.text.PuertoJ_Conf)
-    SysTick_Conf                             0x00000a25   Thumb Code    76  systick.o(.text.SysTick_Conf)
-    SysTick_Init                             0x00000a75   Thumb Code    18  systick.o(.text.SysTick_Init)
-    SysTick_Stop                             0x00000a89   Thumb Code    26  systick.o(.text.SysTick_Stop)
-    SystemInit                               0x00000aa5   Thumb Code    36  system_tm4c129.o(.text.SystemInit)
-    conf_Global_PWM0                         0x00000ac9   Thumb Code   342  pwm.o(.text.conf_Global_PWM0)
-    conf_PWM0_GenB                           0x00000c21   Thumb Code    56  pwm.o(.text.conf_PWM0_GenB)
-    main                                     0x00000c61   Thumb Code   176  main.o(.text.main)
-    max7219_config                           0x00000d19   Thumb Code   100  max7219.o(.text.max7219_config)
-    medirvelocidadmotor                      0x00000d7d   Thumb Code    72  sensor.o(.text.medirvelocidadmotor)
-    velocidaddeseada                         0x00000dc9   Thumb Code   118  max7219.o(.text.velocidaddeseada)
-    velocidadreal                            0x00000e41   Thumb Code   118  max7219.o(.text.velocidadreal)
-    _fp_init                                 0x00000eb7   Thumb Code    26  fpinit.o(x$fpl$fpinit)
-    __fplib_config_fpu_vfp                   0x00000ecf   Thumb Code     0  fpinit.o(x$fpl$fpinit)
-    __fplib_config_pureend_doubles           0x00000ecf   Thumb Code     0  fpinit.o(x$fpl$fpinit)
-    Region$$Table$$Base                      0x00000ed0   Number         0  anon$$obj.o(Region$$Table)
-    Region$$Table$$Limit                     0x00000ef0   Number         0  anon$$obj.o(Region$$Table)
+    PWM_DUTYC                                0x00000599   Thumb Code    68  pwm.o(.text.PWM_DUTYC)
+    PWM_LOAD                                 0x000005dd   Thumb Code    44  pwm.o(.text.PWM_LOAD)
+    Poner_Vel_Init                           0x00000609   Thumb Code    66  pvelocidad.o(.text.Poner_Vel_Init)
+    Poner_Vel_Update                         0x0000064d   Thumb Code   356  pvelocidad.o(.text.Poner_Vel_Update)
+    Poner_Vel_Wait                           0x000007b1   Thumb Code    78  pvelocidad.o(.text.Poner_Vel_Wait)
+    PuertoB_Conf                             0x00000801   Thumb Code   120  pvelocidad.o(.text.PuertoB_Conf)
+    PuertoF_Conf_PWM                         0x00000879   Thumb Code    96  pwm.o(.text.PuertoF_Conf_PWM)
+    PuertoJ_Conf                             0x000008d9   Thumb Code   118  pvelocidad.o(.text.PuertoJ_Conf)
+    SystemInit                               0x00000951   Thumb Code    36  system_tm4c129.o(.text.SystemInit)
+    conf_Global_PWM0                         0x00000975   Thumb Code   342  pwm.o(.text.conf_Global_PWM0)
+    conf_PWM0_GenB                           0x00000acd   Thumb Code   128  pwm.o(.text.conf_PWM0_GenB)
+    main                                     0x00000b55   Thumb Code    98  main.o(.text.main)
+    max7219_config                           0x00000bb9   Thumb Code   100  max7219.o(.text.max7219_config)
+    velocidaddeseada                         0x00000c1d   Thumb Code   118  max7219.o(.text.velocidaddeseada)
+    _fp_init                                 0x00000c93   Thumb Code    26  fpinit.o(x$fpl$fpinit)
+    __fplib_config_fpu_vfp                   0x00000cab   Thumb Code     0  fpinit.o(x$fpl$fpinit)
+    __fplib_config_pureend_doubles           0x00000cab   Thumb Code     0  fpinit.o(x$fpl$fpinit)
+    Region$$Table$$Base                      0x00000cac   Number         0  anon$$obj.o(Region$$Table)
+    Region$$Table$$Limit                     0x00000ccc   Number         0  anon$$obj.o(Region$$Table)
     SystemCoreClock                          0x20000000   Data           4  system_tm4c129.o(.data.SystemCoreClock)
     __libspace_start                         0x20000008   Data          96  libspace.o(.bss)
     __temporary_stack_top$libspace           0x20000068   Data           0  libspace.o(.bss)
@@ -653,9 +640,9 @@ Memory Map of the image
 
   Image Entry point : 0x000002cd
 
-  Load Region LR_1 (Base: 0x00000000, Size: 0x00000ef4, Max: 0xffffffff, ABSOLUTE)
+  Load Region LR_1 (Base: 0x00000000, Size: 0x00000cd0, Max: 0xffffffff, ABSOLUTE)
 
-    Execution Region ER_RO (Exec base: 0x00000000, Load base: 0x00000000, Size: 0x00000ef0, Max: 0xffffffff, ABSOLUTE)
+    Execution Region ER_RO (Exec base: 0x00000000, Load base: 0x00000000, Size: 0x00000ccc, Max: 0xffffffff, ABSOLUTE)
 
     Exec Addr    Load Addr    Size         Type   Attr      Idx    E Section Name        Object
 
@@ -725,45 +712,37 @@ Memory Map of the image
     0x00000488   0x00000488   0x000000e0   Code   RO           53    .text.MAX7219_Ini   max7219.o
     0x00000568   0x00000568   0x0000002e   Code   RO           57    .text.Max7219_Transmit  max7219.o
     0x00000596   0x00000596   0x00000002   PAD
-    0x00000598   0x00000598   0x00000030   Code   RO           70    .text.PID_Init      pid.o
-    0x000005c8   0x000005c8   0x00000094   Code   RO           72    .text.PID_Update    pid.o
-    0x0000065c   0x0000065c   0x00000044   Code   RO           17    .text.PWM_DUTYC     pwm.o
-    0x000006a0   0x000006a0   0x0000002c   Code   RO           15    .text.PWM_LOAD      pwm.o
-    0x000006cc   0x000006cc   0x0000003c   Code   RO           28    .text.Poner_Vel_Init  pvelocidad.o
-    0x00000708   0x00000708   0x0000017c   Code   RO           36    .text.Poner_Vel_Update  pvelocidad.o
-    0x00000884   0x00000884   0x0000004e   Code   RO           34    .text.Poner_Vel_Wait  pvelocidad.o
-    0x000008d2   0x000008d2   0x00000002   PAD
-    0x000008d4   0x000008d4   0x00000078   Code   RO           30    .text.PuertoB_Conf  pvelocidad.o
-    0x0000094c   0x0000094c   0x00000060   Code   RO           13    .text.PuertoF_Conf_PWM  pwm.o
-    0x000009ac   0x000009ac   0x00000076   Code   RO           32    .text.PuertoJ_Conf  pvelocidad.o
-    0x00000a22   0x00000a22   0x00000002   PAD
-    0x00000a24   0x00000a24   0x00000050   Code   RO           92    .text.SysTick_Conf  systick.o
-    0x00000a74   0x00000a74   0x00000012   Code   RO           94    .text.SysTick_Init  systick.o
-    0x00000a86   0x00000a86   0x00000002   PAD
-    0x00000a88   0x00000a88   0x0000001a   Code   RO           96    .text.SysTick_Stop  systick.o
-    0x00000aa2   0x00000aa2   0x00000002   PAD
-    0x00000aa4   0x00000aa4   0x00000024   Code   RO          116    .text.SystemInit    system_tm4c129.o
-    0x00000ac8   0x00000ac8   0x00000156   Code   RO           11    .text.conf_Global_PWM0  pwm.o
-    0x00000c1e   0x00000c1e   0x00000002   PAD
-    0x00000c20   0x00000c20   0x00000040   Code   RO           19    .text.conf_PWM0_GenB  pwm.o
-    0x00000c60   0x00000c60   0x000000b8   Code   RO            2    .text.main          main.o
-    0x00000d18   0x00000d18   0x00000064   Code   RO           55    .text.max7219_config  max7219.o
-    0x00000d7c   0x00000d7c   0x0000004c   Code   RO           83    .text.medirvelocidadmotor  sensor.o
-    0x00000dc8   0x00000dc8   0x00000076   Code   RO           61    .text.velocidaddeseada  max7219.o
-    0x00000e3e   0x00000e3e   0x00000002   PAD
-    0x00000e40   0x00000e40   0x00000076   Code   RO           59    .text.velocidadreal  max7219.o
-    0x00000eb6   0x00000eb6   0x0000001a   Code   RO          218    x$fpl$fpinit        fz_wm.l(fpinit.o)
-    0x00000ed0   0x00000ed0   0x00000020   Data   RO          293    Region$$Table       anon$$obj.o
+    0x00000598   0x00000598   0x00000044   Code   RO           17    .text.PWM_DUTYC     pwm.o
+    0x000005dc   0x000005dc   0x0000002c   Code   RO           15    .text.PWM_LOAD      pwm.o
+    0x00000608   0x00000608   0x00000042   Code   RO           28    .text.Poner_Vel_Init  pvelocidad.o
+    0x0000064a   0x0000064a   0x00000002   PAD
+    0x0000064c   0x0000064c   0x00000164   Code   RO           36    .text.Poner_Vel_Update  pvelocidad.o
+    0x000007b0   0x000007b0   0x0000004e   Code   RO           34    .text.Poner_Vel_Wait  pvelocidad.o
+    0x000007fe   0x000007fe   0x00000002   PAD
+    0x00000800   0x00000800   0x00000078   Code   RO           30    .text.PuertoB_Conf  pvelocidad.o
+    0x00000878   0x00000878   0x00000060   Code   RO           13    .text.PuertoF_Conf_PWM  pwm.o
+    0x000008d8   0x000008d8   0x00000076   Code   RO           32    .text.PuertoJ_Conf  pvelocidad.o
+    0x0000094e   0x0000094e   0x00000002   PAD
+    0x00000950   0x00000950   0x00000024   Code   RO          116    .text.SystemInit    system_tm4c129.o
+    0x00000974   0x00000974   0x00000156   Code   RO           11    .text.conf_Global_PWM0  pwm.o
+    0x00000aca   0x00000aca   0x00000002   PAD
+    0x00000acc   0x00000acc   0x00000088   Code   RO           19    .text.conf_PWM0_GenB  pwm.o
+    0x00000b54   0x00000b54   0x00000062   Code   RO            2    .text.main          main.o
+    0x00000bb6   0x00000bb6   0x00000002   PAD
+    0x00000bb8   0x00000bb8   0x00000064   Code   RO           55    .text.max7219_config  max7219.o
+    0x00000c1c   0x00000c1c   0x00000076   Code   RO           61    .text.velocidaddeseada  max7219.o
+    0x00000c92   0x00000c92   0x0000001a   Code   RO          218    x$fpl$fpinit        fz_wm.l(fpinit.o)
+    0x00000cac   0x00000cac   0x00000020   Data   RO          293    Region$$Table       anon$$obj.o
 
 
-    Execution Region ER_RW (Exec base: 0x20000000, Load base: 0x00000ef0, Size: 0x00000004, Max: 0xffffffff, ABSOLUTE)
+    Execution Region ER_RW (Exec base: 0x20000000, Load base: 0x00000ccc, Size: 0x00000004, Max: 0xffffffff, ABSOLUTE)
 
     Exec Addr    Load Addr    Size         Type   Attr      Idx    E Section Name        Object
 
-    0x20000000   0x00000ef0   0x00000004   Data   RW          118    .data.SystemCoreClock  system_tm4c129.o
+    0x20000000   0x00000ccc   0x00000004   Data   RW          118    .data.SystemCoreClock  system_tm4c129.o
 
 
-    Execution Region ER_ZI (Exec base: 0x20000008, Load base: 0x00000ef4, Size: 0x00000260, Max: 0xffffffff, ABSOLUTE)
+    Execution Region ER_ZI (Exec base: 0x20000008, Load base: 0x00000cd0, Size: 0x00000260, Max: 0xffffffff, ABSOLUTE)
 
     Exec Addr    Load Addr    Size         Type   Attr      Idx    E Section Name        Object
 
@@ -780,20 +759,17 @@ Image component sizes
       Code (inc. data)   RO Data    RW Data    ZI Data      Debug   Object Name
 
         18          0          0          0          0        497   fpu.o
-       184          8          0          0          0       1156   main.o
-       606          0          0          0          0       1460   max7219.o
-       196          0          0          0          0       1046   pid.o
-       756          0          0          0          0       1796   pvelocidad.o
-       614          8          0          0          0       1534   pwm.o
-        76          4          0          0          0        819   sensor.o
+        98          0          0          0          0        918   main.o
+       488          0          0          0          0       1460   max7219.o
+       738          0          0          0          0       1828   pvelocidad.o
+       686          8          0          0          0       1585   pwm.o
        300         22        512          0        512       6052   startup_tm4c129.o
         36          0          0          4          0       1521   system_tm4c129.o
-       124          4          0          0          0        816   systick.o
 
     ----------------------------------------------------------------------
-      2926         46        544          4        512      16697   Object Totals
+      2378         30        544          4        512      13861   Object Totals
          0          0         32          0          0          0   (incl. Generated)
-        16          0          0          0          0          0   (incl. Padding)
+        14          0          0          0          0          0   (incl. Padding)
 
     ----------------------------------------------------------------------
 
@@ -842,15 +818,15 @@ Image component sizes
 
       Code (inc. data)   RO Data    RW Data    ZI Data      Debug   
 
-      3280         62        544          4        608      17149   Grand Totals
-      3280         62        544          4        608      17149   ELF Image Totals
-      3280         62        544          4          0          0   ROM Totals
+      2732         46        544          4        608      14373   Grand Totals
+      2732         46        544          4        608      14373   ELF Image Totals
+      2732         46        544          4          0          0   ROM Totals
 
 ==============================================================================
 
-    Total RO  Size (Code + RO Data)                 3824 (   3.73kB)
+    Total RO  Size (Code + RO Data)                 3276 (   3.20kB)
     Total RW  Size (RW Data + ZI Data)               612 (   0.60kB)
-    Total ROM Size (Code + RO Data + RW Data)       3828 (   3.74kB)
+    Total ROM Size (Code + RO Data + RW Data)       3280 (   3.20kB)
 
 ==============================================================================
 

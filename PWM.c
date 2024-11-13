@@ -46,7 +46,7 @@ void conf_Global_PWM0(uint8_t div,uint16_t freq){
 	PWM0_0_CTL_R |= 0x00000000;
 	
 	//Para el GeneradorB, Cuando Cont = Load, entonces PMW0GENB = Low y cuando Cont=CMPB, entonces PMW0GENB = HIGH
-	PWM0_0_GENB_R |= 0x0000080C; //Este es el generador que utilizo.
+	PWM0_0_GENB_R |= 0x00000C08; //Este es el generador que utilizo.
 	
 	//Paso 7: PWM0LOAD. 500Hz, entonces (500KHz/500Hz)=1000
 	PWM0_0_LOAD_R = PWM_LOAD(div,freq);
@@ -79,8 +79,14 @@ int PWM_DUTYC(uint8_t dutyc, uint8_t div, uint16_t freq){
 //funcion es la que llamo para modificar el valor del comparador B.
 void conf_PWM0_GenB(float y){
   float yp = (1000*y)/130;
+  if((uint16_t)yp == 0){
+    PWM0_0_CMPB_R = 0;
+  }else if((uint16_t)yp == 1000){
+    PWM0_0_CMPB_R = 999;
+  }else {
+    PWM0_0_CMPB_R = (uint16_t)yp;
+  }
 	//Paso 9: M0PWM1 = y% Duty Cycle
-	PWM0_0_CMPB_R = (uint16_t)yp;
 }
 
 void PuertoF_Conf_PWM(){
