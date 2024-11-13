@@ -29,6 +29,10 @@ int main(void){
   //Poner_Vel_Init(&pvelocidad, RPM_adj, RPM);
   Poner_Vel_Init(&pvelocidad, 5, 30.0);
 
+  PWM_MODULE PWM;
+  //PWM0_Init(&PWM, div, freq);
+  PWM0_Init(&PWM, 32, 500);
+
   //Time step para el PID
   float dt = 0.01;
 
@@ -36,9 +40,6 @@ int main(void){
 
   //Configuracion del Max7219
 	MAX7219_Ini();
-
-  //PWM_Conf_Global(div,frecuencia);
-  conf_Global_PWM0(32,500);
 
   //Transmito al MAX7219 la velocidad inicial del motor (pvelocidad.RPM)
 	velocidaddeseada((uint16_t)pvelocidad.RPM);
@@ -60,7 +61,7 @@ int main(void){
     //Si la salida es la misma que la anterior se evita volver a cargar elmismo valor
     if(pid.cout_prev != pid.control_output){
       //Paso "control_output" al modulo PWM para ajustar la velocidad del motor
-      conf_PWM0_GenB(pid.control_output);
+      PWM0_Update_GenB(pid.control_output);
       pid.cout_prev = pid.control_output;
     }
 
