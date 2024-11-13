@@ -7,6 +7,8 @@ void PID_Init(PID_Controller *pid, float Kp, float Ki, float Kd) {
   pid->Kd = Kd;
   pid->prev_error = 0.0;
   pid->integral = 0.0;
+  pid->cout_prev = 0.0;
+  pid->control_output = 0.0;
 }
 
 // Update the PID controller
@@ -25,16 +27,14 @@ void PID_Init(PID_Controller *pid, float Kp, float Ki, float Kd) {
  * importante almacenar el valor del error actual que en el siguiente ciclo pasara
  * a ser el error previo para calcular la derivada.
  */
-float PID_Update(PID_Controller *pid, float setpoint, float measured_value, float dt){
+void PID_Update(PID_Controller *pid, float setpoint, float measured_value, float dt){
   float error = setpoint - measured_value;
   pid->integral += error * dt;
   float derivative = (error - pid->prev_error) / dt;
 
   // Calculate control output
-  float output = (pid->Kp * error) + (pid->Ki * pid->integral) + (pid->Kd * derivative);
+  pid->control_output = (pid->Kp * error) + (pid->Ki * pid->integral) + (pid->Kd * derivative);
 
   // Save current error for next derivative calculation
   pid->prev_error = error;
-
-  return output;
 }

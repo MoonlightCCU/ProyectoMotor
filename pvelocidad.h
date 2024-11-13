@@ -19,7 +19,6 @@ typedef struct {
   uint8_t RPM_max;          //Las RPM maximas, en nuestro caso 130
   uint8_t RPM_adj;          //El tamaño del ajuste para la suma y resta
   float RPM;                //Las RPM que se desean fijar
-  float RPM_prev;
   volatile uint8_t vel;     //Variable Para entrar al menu de fijacion
   volatile uint32_t SWST;   //Variable para almacenar el estado del boton
 }poner_vel;
