@@ -42,15 +42,15 @@ int main(void){
   float dt = 0.01;
 
   //Configuracion del Max7219
-	MAX7219_Ini();
+  MAX7219_Ini();
 
   //Transmito al MAX7219 la velocidad inicial del motor (pvelocidad.RPM)
-	velocidaddeseada((uint16_t)pvelocidad.RPM);
+  velocidaddeseada((uint16_t)pvelocidad.RPM);
 
   //Tiempo de muestreo dt, en este caso dt = 0.01 segundos
   SysTick_Conf(dt);
 
-	while(1){
+  while(1){
     //Mando por referencia la estructura pvelocidad y compruebo el estado del boton B0
     //para decidir si se cambia la velocidad de referencia
     Poner_Vel_Wait(&pvelocidad);
