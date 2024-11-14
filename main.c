@@ -8,7 +8,7 @@
  */
 
 #include "PWM.h"          //Modulo 1. PWM para el motor
-#include "pvelocidad.h"   //Modulo 2. para poner velocidad
+//#include "pvelocidad.h"   //Modulo 2. para poner velocidad
 #include "Max7219.h"      //Modulo 3. para desplegar el valor actual y el fijado
 //#include "PID.h"          //Modulo 4. PID para controlar el motor
 #include "sensor.h"       //Modulo 5. del sensor o modulo de cuadratura (QEI)
@@ -19,21 +19,27 @@ int main(void){
   //Activo las operaciones de punto flotante del microcontrolador
   FPU_INIT();
 
+  /*
   //Creo estructura pid de tipo PID_Controller
-  //PID_Controller pid;
+  PID_Controller pid;
   //PID_Init(&pid,Kp,Ki,Kd)
-  //PID_Init(&pid, 1.0, 0.1, 0.01); // Example gains
+  PID_Init(&pid, 1.0, 0.1, 0.01); // Example gains
+  */
 
+  /*
   //Creo estructura pvelocidad de tipo poner_vel
   poner_vel pvelocidad;
   //Poner_Vel_Init(&pvelocidad, RPM_adj, RPM);
   Poner_Vel_Init(&pvelocidad, 5, 30.0);
+  */
+
+  //Creo estructura sensor de tipo QEI0_SPEED
+  QEI0_SPEED sensor;
+  //Sensor_Init(&sensor, ppr, ratio_reduct);
+  Sensor_Init(&sensor, 843, 75.0);
 
   //Time step para el PID
   //float dt = 0.01;
-  
-  float speed = 0.0;
-  //float control_output = 0.0;
 
   //Configuracion del Max7219
 	MAX7219_Ini();
@@ -52,7 +58,8 @@ int main(void){
     //para decidir si se cambia la velocidad de referencia
     //Poner_Vel_Wait(&pvelocidad);
 
-    speed = medirvelocidadmotor();
+    Sensor_Speed(&sensor);
+    velocidadreal((uint16_t)sensor.RPM_val);
     //Calculo el valor del PID pasandole por referencia la estructura pid, la velocidad
     //deseada, el valor de la velocidad actual y delta de t
     //control_output = PID_Update(&pid, pvelocidad.RPM,speed, dt);

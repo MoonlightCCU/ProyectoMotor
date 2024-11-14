@@ -256,6 +256,7 @@
 //
 //*****************************************************************************
 #define QEI_CTL_FILTCNT_M       0x000F0000  // Input Filter Prescale Count
+#define QEI_CTL_FILTCNT_1       0x00010000  // Input Filter Prescale Count 1
 #define QEI_CTL_FILTEN          0x00002000  // Enable Input Filter
 #define QEI_CTL_STALLEN         0x00001000  // Stall QEI
 #define QEI_CTL_INVI            0x00000800  // Invert Index Pulse
