@@ -33,10 +33,13 @@ int main(void){
   //PWM0_Init(&PWM, div, freq);
   PWM0_Init(&PWM, 32, 500);
 
+  //Creo estructura sensor de tipo QEI0_SPEED
+  QEI0_SPEED sensor;
+  //Sensor_Init(&sensor, ppr, ratio_reduct);
+  Sensor_Init(&sensor, 843, 75.0);
+
   //Time step para el PID
   float dt = 0.01;
-
-  float speed = 0.0;
 
   //Configuracion del Max7219
 	MAX7219_Ini();
@@ -52,11 +55,12 @@ int main(void){
     //para decidir si se cambia la velocidad de referencia
     Poner_Vel_Wait(&pvelocidad);
 
-    speed = medirvelocidadmotor();
+    Sensor_Speed(&sensor);
+    velocidadreal((uint16_t)sensor.RPM_val);
 
     //Calculo el valor del PID pasandole por referencia la estructura pid, la velocidad
     //deseada, el valor de la velocidad actual y delta de t
-    PID_Update(&pid, pvelocidad.RPM,speed, dt);
+    PID_Update(&pid, pvelocidad.RPM,sensor.RPM_val, dt);
     
     //Si la salida es la misma que la anterior se evita volver a cargar elmismo valor
     if(pid.cout_prev != pid.control_output){
