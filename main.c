@@ -43,13 +43,7 @@ int main(void){
   PWM0_Init(&PWM, 32, 500);
 
   //Time step para el PID
-<<<<<<< HEAD
   //float dt = 0.01;
-=======
-  float dt = 0.01;
-
-  float speed = 0.0;
->>>>>>> pwm_module
 
   //Configuracion del Max7219
 	MAX7219_Ini();
@@ -65,25 +59,14 @@ int main(void){
     //para decidir si se cambia la velocidad de referencia
     //Poner_Vel_Wait(&pvelocidad);
 
-<<<<<<< HEAD
     Sensor_Speed(&sensor);
     velocidadreal((uint16_t)sensor.RPM_val);
-    //Calculo el valor del PID pasandole por referencia la estructura pid, la velocidad
-    //deseada, el valor de la velocidad actual y delta de t
-    //control_output = PID_Update(&pid, pvelocidad.RPM,speed, dt);
-
-    //Paso "control_output" al modulo PWM para ajustar la velocidad del motor
-    //conf_PWM0_GenB(control_output);
 
     /*
-    //Inicio SisTyck con el valor del tiempo dt
-=======
-    speed = medirvelocidadmotor();
-
     //Calculo el valor del PID pasandole por referencia la estructura pid, la velocidad
     //deseada, el valor de la velocidad actual y delta de t
-    PID_Update(&pid, pvelocidad.RPM,speed, dt);
-    
+    PID_Update(&pid, pvelocidad.RPM,sensor.RPM_val, dt);
+
     //Si la salida es la misma que la anterior se evita volver a cargar elmismo valor
     if(pid.cout_prev != pid.control_output){
       //Paso "control_output" al modulo PWM para ajustar la velocidad del motor
@@ -91,7 +74,6 @@ int main(void){
       pid.cout_prev = pid.control_output;
     }
 
->>>>>>> pwm_module
     SysTick_Init();
     while(NVIC_ST_CTRL_R != 0x00010001){
       //dt = 0.01s = 10ms
