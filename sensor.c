@@ -68,6 +68,10 @@ void Sensor_Speed(QEI0_SPEED *sensor){
   sensor->RPM_val = sensor->velocity / sensor->ratio_reduct;
 }
 
+void Sensor_QEI0(QEI0_SPEED *sensor){
+  sensor->ppr = QEI0_SPEED_R;
+}
+
 /*
 //Se hace el calculo de las revoluciones por minuto del motor de acuerdo a las pulsaciones que se dan en un minuto
 float medirvelocidadmotor (void){

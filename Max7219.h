@@ -1,3 +1,6 @@
+#ifndef MAX7219_SPI0
+#define MAX7219_SPI0
+
 #include <stdint.h>
 #include "tm4c1294ncpdt.h"
 
@@ -8,15 +11,36 @@
 //max7219 pin 5 CLK -->TIVA C PA2  SSI0Clk 
 //max7219 pin x DOUT --> No se usa
 
-#define shutMode    0x0C00
-#define Nperacion   0x0C01
-#define Dcode       0x09FF
-#define Intensidad  0x0A02
-#define SCAN        0x0B07
-//#define Test      0x0F01
 
-void Max7219_Transmit(uint16_t dato);
-void velocidadreal(uint16_t velocidad);
-void velocidaddeseada(uint16_t velocidad);
-void MAX7219_Ini(void);
-void max7219_config(void);
+typedef struct {
+  uint8_t a;          // Ganancia Proporcional
+  uint8_t b;          // Ganancia Integral
+  uint16_t shutMode;
+  uint16_t Nperacion;
+  uint16_t Dcode;
+  uint16_t Intensidad;
+  uint16_t SCAN;
+  uint16_t sep;          // Ganancia Derivativa
+  uint16_t valor_transmitir;  // Error Previo
+}MAX7219;
+
+//Prototipo de función que sirve para inicializar los valores del PID
+void MAX7219_Init(MAX7219 *);
+
+//Prototipo de función que sirve para calcular el PID
+void SPI0_Config();
+
+void MAX7219_Config(MAX7219 *);
+
+void MAX7219_Speed(MAX7219 *, uint16_t, uint8_t);
+
+void REG_SPEED(MAX7219 *, uint16_t);
+
+void MAX7219_Transmit(uint16_t);
+
+void SPI0_PortA_Conf(void);
+
+//void velocidadreal(MAX7219 *);
+//void velocidaddeseada(MAX7219 *);
+
+#endif

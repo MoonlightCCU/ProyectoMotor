@@ -23,6 +23,8 @@ void QEI0_Conf(void);
 //Prototipo para la función para obtener la velocidad actual
 void Sensor_Speed(QEI0_SPEED *);
 
+void Sensor_QEI0(QEI0_SPEED *);
+
 //Prototipo para la función de configuración del puerto L
 void QEI0_PortL_Conf(void);
 

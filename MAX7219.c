@@ -1,14 +1,22 @@
 #include "Max7219.h"
 
-void MAX7219_Ini(void){
-  SYSCTL_RCGCSSI_R |= 0x01; // Habilitar el módulo SSI0 para la comunicación SPI
-  SYSCTL_RCGCGPIO_R |= 0x01; // Habilitar el puerto A, donde están los pines del módulo SSI0
-  while ((SYSCTL_PRGPIO_R & 0x0001) == 0) {} // Esperar hasta que el puerto A esté listo para configurarse
+void MAX7219_Init(MAX7219 *max){
+  max->a = 0;
+  max->b = 0;
+  max->shutMode = 0x0C00;
+  max->Nperacion = 0x0C01;
+  max->Dcode = 0x09FF;
+  max->Intensidad = 0x0A02;
+  max->SCAN = 0x0B07;
+  max->sep = 0;
+  max->valor_transmitir = 0;
+  SPI0_PortA_Conf();
+  SPI0_Config();
+  MAX7219_Config(max);
+}
 
-  GPIO_PORTA_AFSEL_R |= 0x1C; // Asignar funciones alternativas digitales a los pines PA2, PA3 y PA4
-  GPIO_PORTA_DEN_R |= 0x1C;   // Habilitar el modo digital en los pines PA2, PA3 y PA4
-  GPIO_PORTA_PCTL_R = (GPIO_PORTA_PCTL_R & 0xFFF000FF) + 0x000FFF00; // Configurar PA2, PA3 y PA4 para la función SSI0
-  GPIO_PORTA_AMSEL_R = 0; // Desactivar la función analógica en el puerto A
+void SPI0_Config(){
+  SYSCTL_RCGCSSI_R |= 0x01; // Habilitar el módulo SSI0 para la comunicación SPI
 
   SSI0_CR1_R &= ~SSI_CR1_SSE; // Desactivar la operación del módulo SSI0 mientras se configura
   SSI0_CR1_R &= ~SSI_CR1_MS; // Configurar como maestro
@@ -24,50 +32,82 @@ void MAX7219_Ini(void){
   SSI0_CR0_R |= SSI_CR0_DSS_M; // Configurar para transmitir datos de 16 bits
 
   SSI0_CR1_R |= SSI_CR1_SSE; // Activar el módulo SSI0 para iniciar la operación
-
-  max7219_config();
 }
 
 // Configuración inicial del MAX7219 para manejar los dígitos del display
-void max7219_config(void){
-  Max7219_Transmit(Nperacion); // Enviar configuración de no operación al MAX7219
-  Max7219_Transmit(Dcode);     // Configurar el MAX7219 para usar el decodificador interno
-  Max7219_Transmit(Intensidad); // Configurar la intensidad de brillo (5/32) según la hoja de datos
-  Max7219_Transmit(SCAN);      // Configurar el número de dígitos que se escanean en el display
+void MAX7219_Config(MAX7219 *max){
+  MAX7219_Transmit(max->Dcode); // Enviar configuración de no operación al MAX7219
+  MAX7219_Transmit(max->Dcode);     // Configurar el MAX7219 para usar el decodificador interno
+  MAX7219_Transmit(max->Intensidad); // Configurar la intensidad de brillo (5/32) según la hoja de datos
+  MAX7219_Transmit(max->SCAN);      // Configurar el número de dígitos que se escanean en el display
 
   // Enviar datos para inicializar cada dígito en el display
-  Max7219_Transmit(0x0100); // Transmite numero 0 para el dígito 0
-  Max7219_Transmit(0x0200); // Transmite numero 0 para el dígito 1
-  Max7219_Transmit(0x0300); // Transmite numero 0 para el dígito 2
-  Max7219_Transmit(0x0400); // Transmite numero 0 para el dígito 3
-  Max7219_Transmit(0x0500); // Transmite numero 0 para el dígito 4
-  Max7219_Transmit(0x0600); // Transmite numero 0 para el dígito 5
-  Max7219_Transmit(0x0700); // Transmite numero 0 para el dígito 6
-  Max7219_Transmit(0x0800); // Transmite numero 0 para el dígito 7
+  for(max->a = 0; max->a < (max->b = 8); max->a++){
+    MAX7219_Transmit(0x0100 * (max->a+1));
+  }
 }
 
-void Max7219_Transmit(uint16_t dato){
+void MAX7219_Transmit(uint16_t dato){
   // Esperar hasta que el buffer de transmisión esté vacío
   while ((SSI0_SR_R & SSI_SR_TNF) == 0) {}
-
   // Transmitir el dato al MAX7219 cuando el buffer esté vacío
   SSI0_DR_R = dato;
 }
 
-void velocidadreal(uint16_t velocidad){
-	for (uint8_t i = 0; i < 3; i++){
-		Max7219_Transmit(0x040A);
-		uint16_t valor_transmitir = velocidad % 10;
-		Max7219_Transmit (valor_transmitir + (0x0100 * (i+1)));
+
+void MAX7219_Speed(MAX7219 *max,uint16_t velocidad, uint8_t select){
+  if(select == 1){
+    max->a = 0;
+    max->b = 3;
+    max->sep = 0x040A;
+  }else {
+    max->a = 5;
+    max->b = 8;
+    max->sep = 0x050A;
+  }
+  for (uint8_t i = max->a; i < max->b ; i++){
+    MAX7219_Transmit(max->sep);
+    max->valor_transmitir = velocidad % 10;
+    MAX7219_Transmit(max->valor_transmitir + (0x0100 * (i+1)));
+    velocidad = velocidad / 10;
+	}
+}
+
+/*
+void velocidadreal(MAX7219 *max, uint16_t velocidad){
+  for (max->a = 0; max->a < 3; max->a++){
+    MAX7219_Transmit(0x040A);
+    max->valor_transmitir = velocidad % 10;
+    MAX7219_Transmit (max->valor_transmitir + (0x0100 * (max->a+1)));
+    velocidad = velocidad / 10;
+  }
+}
+
+void velocidaddeseada(MAX7219 *max, uint16_t velocidad){
+	for (max->a = 5; max->a < 8; max->a++){
+		MAX7219_Transmit(0x050A);
+		max->valor_transmitir = velocidad % 10;
+		MAX7219_Transmit (max->valor_transmitir + (0x0100 * (max->a+1)));
+		velocidad = velocidad / 10;
+	}
+}
+*/
+
+void REG_SPEED(MAX7219 *max, uint16_t velocidad){
+	for (max->a = 0; max->a < 4; max->a++){
+		//MAX7219_Transmit(0x050A);
+		max->valor_transmitir = velocidad % 10;
+		MAX7219_Transmit (max->valor_transmitir + (0x0100 * (max->a+1)));
 		velocidad = velocidad / 10;
 	}
 }
 
-void velocidaddeseada(uint16_t velocidad){
-	for (uint8_t i = 5; i < 8; i++){
-		Max7219_Transmit(0x050A);
-		uint16_t valor_transmitir = velocidad % 10;
-		Max7219_Transmit (valor_transmitir + (0x0100 * (i+1)));
-		velocidad = velocidad / 10;
-	}
+void SPI0_PortA_Conf(){
+  SYSCTL_RCGCGPIO_R |= 0x01; // Habilitar el puerto A, donde están los pines del módulo SSI0
+  while ((SYSCTL_PRGPIO_R & 0x0001) == 0) {} // Esperar hasta que el puerto A esté listo para configurarse
+
+  GPIO_PORTA_AFSEL_R |= 0x1C; // Asignar funciones alternativas digitales a los pines PA2, PA3 y PA4
+  GPIO_PORTA_DEN_R |= 0x1C;   // Habilitar el modo digital en los pines PA2, PA3 y PA4
+  GPIO_PORTA_PCTL_R = (GPIO_PORTA_PCTL_R & 0xFFF000FF) + 0x000FFF00; // Configurar PA2, PA3 y PA4 para la función SSI0
+  GPIO_PORTA_AMSEL_R = 0; // Desactivar la función analógica en el puerto A
 }

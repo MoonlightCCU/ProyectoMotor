@@ -8,7 +8,7 @@
  */
 
 #include "PWM.h"          //Modulo 1. PWM para el motor
-//#include "pvelocidad.h"   //Modulo 2. para poner velocidad
+#include "pvelocidad.h"   //Modulo 2. para poner velocidad
 #include "Max7219.h"      //Modulo 3. para desplegar el valor actual y el fijado
 //#include "PID.h"          //Modulo 4. PID para controlar el motor
 #include "sensor.h"       //Modulo 5. del sensor o modulo de cuadratura (QEI)
@@ -26,17 +26,15 @@ int main(void){
   PID_Init(&pid, 1.0, 0.1, 0.01); // Example gains
   */
 
-  /*
   //Creo estructura pvelocidad de tipo poner_vel
   poner_vel pvelocidad;
   //Poner_Vel_Init(&pvelocidad, RPM_adj, RPM);
-  Poner_Vel_Init(&pvelocidad, 5, 30.0);
-  */
+  Poner_Vel_Init(&pvelocidad, 5, 130.0);
 
   //Creo estructura sensor de tipo QEI0_SPEED
   QEI0_SPEED sensor;
   //Sensor_Init(&sensor, ppr, ratio_reduct);
-  Sensor_Init(&sensor, 843, 75.0);
+  Sensor_Init(&sensor, 12, 45.0);
 
   PWM_MODULE PWM;
   //PWM0_Init(&PWM, div, freq);
@@ -46,10 +44,11 @@ int main(void){
   //float dt = 0.01;
 
   //Configuracion del Max7219
-	MAX7219_Ini();
+  MAX7219 max;
+	MAX7219_Init(&max);
 
   //Transmito al MAX7219 la velocidad inicial del motor (pvelocidad.RPM)
-	//velocidaddeseada((uint16_t)pvelocidad.RPM);
+	MAX7219_Speed(&max,(uint16_t)pvelocidad.RPM,2);
 
   //Tiempo de muestreo dt, en este caso dt = 0.01 segundos
   //SysTick_Conf(dt);
@@ -57,10 +56,18 @@ int main(void){
 	while(1){
     //Mando por referencia la estructura pvelocidad y compruebo el estado del boton B0
     //para decidir si se cambia la velocidad de referencia
-    //Poner_Vel_Wait(&pvelocidad);
+    Poner_Vel_Wait(&pvelocidad,&max);
 
     Sensor_Speed(&sensor);
-    velocidadreal((uint16_t)sensor.RPM_val);
+    //REG_SPEED(sensor.RPM_val);
+    MAX7219_Speed(&max,(uint16_t)sensor.RPM_val,1);
+
+    if(pvelocidad.RPM_prev != pvelocidad.RPM){
+      //Paso "control_output" al modulo PWM para ajustar la velocidad del motor
+      //velocidaddeseada((uint16_t)pvelocidad.RPM);
+      PWM0_Update_GenB(pvelocidad.RPM);
+      pvelocidad.RPM_prev = pvelocidad.RPM;
+    }
 
     /*
     //Calculo el valor del PID pasandole por referencia la estructura pid, la velocidad

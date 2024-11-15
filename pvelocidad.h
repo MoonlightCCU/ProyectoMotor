@@ -18,6 +18,7 @@ typedef struct {
   uint8_t RPM_min;          //Las RPM min, en nuestro caso cero
   uint8_t RPM_max;          //Las RPM maximas, en nuestro caso 130
   uint8_t RPM_adj;          //El tamaño del ajuste para la suma y resta
+  float RPM_prev;
   float RPM;                //Las RPM que se desean fijar
   volatile uint8_t vel;     //Variable Para entrar al menu de fijacion
   volatile uint32_t SWST;   //Variable para almacenar el estado del boton
@@ -27,10 +28,10 @@ typedef struct {
 void Poner_Vel_Init(poner_vel *, uint8_t, float);
 
 //Prototipo para la funcion de comprobar la pulsacion del boton B0
-void Poner_Vel_Wait(poner_vel *);
+void Poner_Vel_Wait(poner_vel *, MAX7219 *);
 
 //Prototipo para la funcion de poner o fijar la velocidad
-void Poner_Vel_Update(poner_vel *);
+void Poner_Vel_Update(poner_vel *, MAX7219 *);
 
 //Prototipos para configurar los botones de los puertos a utilizar (J0, J1 y B0)
 void PuertoB_Conf(void);
