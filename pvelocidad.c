@@ -25,20 +25,20 @@ void Poner_Vel_Init(poner_vel *pvelocidad, uint8_t RPM_adj, float RPM){
 
 //Funcion para sensar la pulsacion del boton B0, si se detecta pulsacion
 //Se procede a entrar al menu para fijar la velocidad deseada.
-void Poner_Vel_Wait(poner_vel *pvelocidad, MAX7219 *max){
+void Poner_Vel_Wait(poner_vel *pvelocidad){
 	if((GPIO_PORTB_DATA_R & 0x01) == 0) {      //Detecta si el botón en PortB fue presionado
 		while((GPIO_PORTB_DATA_R & 0x01) == 0);  //Espera a que se suelte el botón ?? Tal vez haya que comentar esto
 		pvelocidad->vel = 1;                     //Activa la señal para entrar a `Poner_Vel_Update`
 	}
 
 	if(pvelocidad->vel == 1) {
-		Poner_Vel_Update(pvelocidad,max); //Llama a 'Poner_Vel_Update'
+		Poner_Vel_Update(pvelocidad); //Llama a 'Poner_Vel_Update'
 		pvelocidad->vel = 0;  //Reinicia la señal de velocidad para volver a esperar otra pulsación
 	}
 }
 
 //Funcion para cambiar o fijar la velocidad deseada
-void Poner_Vel_Update(poner_vel *pvelocidad, MAX7219 *max){
+void Poner_Vel_Update(poner_vel *pvelocidad){
   do{
     //Leo el estado del boton
     pvelocidad->SWST = GPIO_PORTJ_DATA_R;
@@ -55,7 +55,7 @@ void Poner_Vel_Update(poner_vel *pvelocidad, MAX7219 *max){
         if((int)pvelocidad->RPM < pvelocidad->RPM_min){
           pvelocidad->RPM = pvelocidad->RPM_min;	//Apago el motor
         }
-        MAX7219_Speed(max,(uint16_t)pvelocidad->RPM,2); //TRANSMITO AL MAX7219
+        MAX7219_VelocidadD((uint16_t)pvelocidad->RPM); //TRANSMITO AL MAX7219
 
         //Mientras siga pulsado el boton, no hago nada.
         //Esto es para evitar que se siga ejecutando el if()
@@ -74,7 +74,7 @@ void Poner_Vel_Update(poner_vel *pvelocidad, MAX7219 *max){
         if((int)pvelocidad->RPM > pvelocidad->RPM_max){
           pvelocidad->RPM = pvelocidad->RPM_max;  //Mantengo al 100% la velocidad del motor
         }
-        MAX7219_Speed(max,(uint16_t)pvelocidad->RPM,2); //TRANSMITO AL MAX7219
+        MAX7219_VelocidadD((uint16_t)pvelocidad->RPM); //TRANSMITO AL MAX7219
 
         //Mientras siga pulsado el boton, no hago nada.
         //Esto es para evitar que se siga ejecutando el if()

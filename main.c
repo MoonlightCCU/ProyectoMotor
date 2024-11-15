@@ -48,7 +48,7 @@ int main(void){
 	MAX7219_Init(&max);
 
   //Transmito al MAX7219 la velocidad inicial del motor (pvelocidad.RPM)
-	MAX7219_Speed(&max,(uint16_t)pvelocidad.RPM,2);
+	MAX7219_VelocidadD((uint16_t)pvelocidad.RPM);
 
   //Tiempo de muestreo dt, en este caso dt = 0.01 segundos
   //SysTick_Conf(dt);
@@ -56,11 +56,11 @@ int main(void){
 	while(1){
     //Mando por referencia la estructura pvelocidad y compruebo el estado del boton B0
     //para decidir si se cambia la velocidad de referencia
-    Poner_Vel_Wait(&pvelocidad,&max);
+    Poner_Vel_Wait(&pvelocidad);
 
     Sensor_Speed(&sensor);
     //REG_SPEED(sensor.RPM_val);
-    MAX7219_Speed(&max,(uint16_t)sensor.RPM_val,1);
+    MAX7219_VelocidadR((uint16_t)sensor.RPM_val);
 
     if(pvelocidad.RPM_prev != pvelocidad.RPM){
       //Paso "control_output" al modulo PWM para ajustar la velocidad del motor

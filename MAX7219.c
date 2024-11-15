@@ -1,15 +1,11 @@
 #include "Max7219.h"
 
 void MAX7219_Init(MAX7219 *max){
-  max->a = 0;
-  max->b = 0;
   max->shutMode = 0x0C00;
   max->Nperacion = 0x0C01;
   max->Dcode = 0x09FF;
   max->Intensidad = 0x0A02;
   max->SCAN = 0x0B07;
-  max->sep = 0;
-  max->valor_transmitir = 0;
   SPI0_PortA_Conf();
   SPI0_Config();
   MAX7219_Config(max);
@@ -34,6 +30,13 @@ void SPI0_Config(){
   SSI0_CR1_R |= SSI_CR1_SSE; // Activar el módulo SSI0 para iniciar la operación
 }
 
+void MAX7219_Transmit(uint16_t dato){
+  // Esperar hasta que el buffer de transmisión esté vacío
+  while ((SSI0_SR_R & SSI_SR_TNF) == 0) {}
+  // Transmitir el dato al MAX7219 cuando el buffer esté vacío
+  SSI0_DR_R = dato;
+}
+
 // Configuración inicial del MAX7219 para manejar los dígitos del display
 void MAX7219_Config(MAX7219 *max){
   MAX7219_Transmit(max->Dcode); // Enviar configuración de no operación al MAX7219
@@ -42,64 +45,37 @@ void MAX7219_Config(MAX7219 *max){
   MAX7219_Transmit(max->SCAN);      // Configurar el número de dígitos que se escanean en el display
 
   // Enviar datos para inicializar cada dígito en el display
-  for(max->a = 0; max->a < (max->b = 8); max->a++){
-    MAX7219_Transmit(0x0100 * (max->a+1));
+  for(uint8_t i = 0; i < 8; i++){
+    MAX7219_Transmit(0x0100 * (i+1));
   }
 }
 
-void MAX7219_Transmit(uint16_t dato){
-  // Esperar hasta que el buffer de transmisión esté vacío
-  while ((SSI0_SR_R & SSI_SR_TNF) == 0) {}
-  // Transmitir el dato al MAX7219 cuando el buffer esté vacío
-  SSI0_DR_R = dato;
-}
-
-
-void MAX7219_Speed(MAX7219 *max,uint16_t velocidad, uint8_t select){
-  if(select == 1){
-    max->a = 0;
-    max->b = 3;
-    max->sep = 0x040A;
-  }else {
-    max->a = 5;
-    max->b = 8;
-    max->sep = 0x050A;
-  }
-  for (uint8_t i = max->a; i < max->b ; i++){
-    MAX7219_Transmit(max->sep);
-    max->valor_transmitir = velocidad % 10;
-    MAX7219_Transmit(max->valor_transmitir + (0x0100 * (i+1)));
-    velocidad = velocidad / 10;
-	}
-}
-
-/*
-void velocidadreal(MAX7219 *max, uint16_t velocidad){
-  for (max->a = 0; max->a < 3; max->a++){
+void MAX7219_VelocidadR(uint16_t velocidad){
+  for (uint8_t i = 0; i < 3; i++){
     MAX7219_Transmit(0x040A);
-    max->valor_transmitir = velocidad % 10;
-    MAX7219_Transmit (max->valor_transmitir + (0x0100 * (max->a+1)));
+    uint16_t valor_transmitir = velocidad % 10;
+    MAX7219_Transmit (valor_transmitir + (0x0100 * (i+1)));
     velocidad = velocidad / 10;
   }
 }
 
-void velocidaddeseada(MAX7219 *max, uint16_t velocidad){
-	for (max->a = 5; max->a < 8; max->a++){
-		MAX7219_Transmit(0x050A);
-		max->valor_transmitir = velocidad % 10;
-		MAX7219_Transmit (max->valor_transmitir + (0x0100 * (max->a+1)));
-		velocidad = velocidad / 10;
-	}
+void MAX7219_VelocidadD(uint16_t velocidad){
+  for (uint8_t i = 5; i < 8; i++){
+    MAX7219_Transmit(0x050A);
+    uint16_t valor_transmitir = velocidad % 10;
+    MAX7219_Transmit (valor_transmitir + (0x0100 * (i+1)));
+    velocidad = velocidad / 10;
+  }
 }
-*/
 
-void REG_SPEED(MAX7219 *max, uint16_t velocidad){
-	for (max->a = 0; max->a < 4; max->a++){
-		//MAX7219_Transmit(0x050A);
-		max->valor_transmitir = velocidad % 10;
-		MAX7219_Transmit (max->valor_transmitir + (0x0100 * (max->a+1)));
-		velocidad = velocidad / 10;
-	}
+
+void REG_SPEED(uint16_t velocidad){
+  for (uint8_t i = 0; i < 4; i++){
+    //MAX7219_Transmit(0x050A);
+    uint16_t valor_transmitir = velocidad % 10;
+    MAX7219_Transmit (valor_transmitir + (0x0100 * (i+1)));
+    velocidad = velocidad / 10;
+  }
 }
 
 void SPI0_PortA_Conf(){
